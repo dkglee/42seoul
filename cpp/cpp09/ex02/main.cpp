@@ -12,5 +12,11 @@ int main(int argc, char* argv[])
 	for (auto it : varr)
 		std::cout << it << ' ';
 	std::cout << std::endl;
-	return 0;
+	return 0;아나
+	님
+	열공
+	노미네이트
+	탈락입니다
+	ㅋ
+	
 }
