@@ -34,7 +34,6 @@ void accept_loop(int sock) {
 	struct sockaddr_in myaddr;
 	memset(&myaddr, 0, sizeof(myaddr));
 
-
 	struct pollfd fds[POLL_SIZE];
 	memset(fds, 0, sizeof(fds));
 	fds[0].fd = listening_sock;
