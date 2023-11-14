@@ -8,7 +8,7 @@
 #include <cstring>
 #include <errno.h>
 
-#define BUF_SIZE 100
+#define BUF_SIZE 10000
 #define POLL_SIZE 100
 
 void accept_loop(int sock) {
