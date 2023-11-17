@@ -12,8 +12,14 @@
 #include <string>
 
 class Socket {
+private:
+	int sockNum;
+	socklen_t adr_sz;
+	struct sockaddr_in sock_adr;
 public:
-	int createSocket(int port);
+	Socket createSocket(int port);
+	Socket accepSocket(int fd);
+	int getSocket();
 };
 
 #endif

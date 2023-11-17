@@ -25,16 +25,22 @@
 // signal
 # include <signal.h>
 // Channel & User
-# include <Channel.hpp>
-# include <User.hpp>
+# include "Channel.hpp"
+# include "User.hpp"
 
 // DB
-# include <Database.hpp>
+# include "Database.hpp"
 
 // Constant
-# define BUFF_SIZE 1500
+// # define BUFF_SIZE 1500
 # define POLL_SIZE 1000
 # define CHANNEL_SIZE 1000
+
+// Parsing
+# include "Parse.hpp"
+
+// Operation
+# include "IOperation.hpp"
 
 // use default destructor
 class Server {
@@ -50,17 +56,25 @@ private:
 
 	// User & Channels
 	Channel chs[CHANNEL_SIZE];
-	std::map<std::string, User> user;
+	std::map<int, User> running_user_lists;
+	std::map<std::string, User> backup_user_lists;
 
 	// DB
 	Database db_tool;
 	
 	// tool
-	Socket sock_tool;
+	Socket* sock_tool;
 
 	// Not Permitted Methods of Creating Instance
 	Server(const Server&);
 	Server operator=(const Server&);
+
+	// Parse
+	Parse parse_tool;
+
+	// Operation Interface
+	IOperation* op_tool;
+	
 public:
 	Server(const char*, const char*);
 	void runServer();
