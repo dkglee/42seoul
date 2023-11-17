@@ -11,7 +11,7 @@ private:
 	std::string nickName;
 	std::string channel;
 public:
-	void setValue(std::string val, int flag);
+	void setValue(std::string val, int offset);
 	virtual void runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, int fd);
 	virtual ~AuthOperation();
 };
