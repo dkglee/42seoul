@@ -2,14 +2,16 @@
 # define SOCKET_IO
 
 // file system all
-#include <fcntl.h>
+# include <fcntl.h>
 // socket
-#include <sys/socket.h>
+# include <sys/socket.h>
 // TCP
-#include <netinet/in.h>
-#include <arpa/inet.h>
+# include <netinet/in.h>
+# include <arpa/inet.h>
 // stl
-#include <string>
+# include <string>
+
+# define BUFF_SIZE 1500
 
 class Socket {
 private:
@@ -20,6 +22,7 @@ public:
 	Socket createSocket(int port);
 	Socket accepSocket(int fd);
 	int getSocket();
+	int readBuff(int fd, char* buf);
 };
 
 #endif

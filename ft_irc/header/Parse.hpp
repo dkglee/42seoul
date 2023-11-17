@@ -8,11 +8,15 @@
 # include <map>
 # include <string>
 
+typedef std::map<int, User> r_list;
+typedef std::map<std::string, User> b_list;
+
 class Parse {
 private:
+	Socket* sock_tool;
 	char buf[BUFF_SIZE];
 public:
-	IOperation* parseBuf(int, std::map<int, User>&, std::map<std::string, User>&);
+	IOperation* parseBuf(int, r_list&, b_list&);
 };
 
 #endif

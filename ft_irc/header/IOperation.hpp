@@ -8,8 +8,8 @@
 
 class IOperation {
 public:
-	virtual void runOperation(Channel* chs, std::map<int, User>& user_list, int fd);
-	virtual ~IOperation();
+	virtual void runOperation(Channel* chs, std::map<int, User>& user_list, int fd) = 0;
+	virtual ~IOperation() = 0;
 };
 
 #endif

@@ -19,6 +19,7 @@ private:
 	int assocChannel;
 // User Socket Info
 	Socket sock_info;
+	// struct sockaddr_in user_adr;
 };
 
 #endif
