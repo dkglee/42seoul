@@ -26,3 +26,8 @@ Socket Socket::accepSocket(int fd) {
 int Socket::getSocket() {
 	return this->sockNum;
 }
+
+int Socket::readBuff(int fd, char* buf) {
+	int strlen = recv(fd, (void *)buf, BUFF_SIZE, 0);
+	return strlen;
+}
