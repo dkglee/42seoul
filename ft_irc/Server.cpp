@@ -14,8 +14,10 @@ void Server::init(int servSock) {
 
 void Server::runServer() {
 	Socket serv_sock = sock_tool->createSocket(port);
-	if (listen(serv_sock.getSocket(), 5));
-
+	
+	if (listen(serv_sock.getSocket(), 5)) {
+		// err
+	}
 	init(serv_sock.getSocket());
 	
 	int retval;
@@ -34,7 +36,7 @@ void Server::runServer() {
 						fds[i].fd = cli_sock.getSocket();
 						fds[i].events = POLLIN;
 						nfds += 1;
-						running_user_lists.insert({fds[i].fd, User()}); // C++98에는 이게 안되나?
+						// running_user_lists.insert({fds[i].fd, User()}); // C++98에는 이게 안되나?
 						break;
 					}
 				}
@@ -42,7 +44,7 @@ void Server::runServer() {
 				for (int i = 1; i < POLL_SIZE; i++) {
 					if (fds[i].revents & POLLIN) {
 						op_tool = parse_tool.parseBuf(fds[i].fd, running_user_lists, backup_user_lists);
-						op_tool->runOperation(chs, running_user_lists, fds[i].fd);
+						op_tool->runOperation(chs, running_user_lists, backup_user_lists, fds[i].fd);
 					}
 				}
 			}

@@ -6,9 +6,12 @@
 # include "User.hpp"
 # include "Channel.hpp"
 
+typedef std::map<int, User> r_list;
+typedef std::map<std::string, User> b_list;
+
 class IOperation {
 public:
-	virtual void runOperation(Channel* chs, std::map<int, User>& user_list, int fd) = 0;
+	virtual void runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, int fd) = 0;
 	virtual ~IOperation() = 0;
 };
 
