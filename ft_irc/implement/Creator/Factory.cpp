@@ -4,6 +4,10 @@
 #include "../../header/Invite.hpp"
 #include "../../header/Topic.hpp"
 #include "../../header/Mode.hpp"
+#include "../../header/Join.hpp"
+#include <sstream>
+#include <vector>
+#include <iostream>
 
 // 예외 케이스 및 에러 처리 할것.
 IOperation* AuthCreator::factoryMethod(char* buf, int buf_size) {
@@ -77,7 +81,20 @@ IOperation* OpModeCreator::factoryMethod(char* buf, int buf_size) {
 OpModeCreator::~OpModeCreator() {}
 
 IOperation* JoinCreator::factoryMethod(char* buf, int buf_size) {
-
+	JoinOperation* ret = new JoinOperation();
+	std::string temp(buf);
+	std::istringstream iss(temp);
+	char delimiter = ' ';
+	std::vector<std::string> args;
+	std::string temp_buf;
+	while (getline(iss, temp_buf, delimiter)) {
+		args.push_back(temp_buf);
+	}
+	if (args.size() > 2)
+		ret->setJoin(args[1], args[2]);
+	else
+		ret->setJoin(args[1], "");
+	return ret;
 }
 
 JoinCreator::~JoinCreator() {}
