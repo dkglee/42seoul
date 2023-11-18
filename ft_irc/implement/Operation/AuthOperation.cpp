@@ -5,4 +5,8 @@ void AuthOperation::setValue(std::string val, int offset) {
 	(this->*arr[offset]) = val;
 }
 
+void AuthOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, int fd) {
+	
+}
+
 AuthOperation::~AuthOperation() {}
