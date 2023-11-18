@@ -5,6 +5,7 @@
 #include "../../header/Topic.hpp"
 #include "../../header/Mode.hpp"
 #include "../../header/Join.hpp"
+#include "../../header/Message.hpp"
 #include <sstream>
 #include <vector>
 #include <iostream>
@@ -100,7 +101,10 @@ IOperation* JoinCreator::factoryMethod(char* buf, int buf_size) {
 JoinCreator::~JoinCreator() {}
 
 IOperation* MessageCreator::factoryMethod(char* buf, int buf_size) {
-
+	MessageOperation* ret = new MessageOperation();
+	std::string temp(buf);
+	ret->setMessage(temp);
+	return ret;
 }
 
 MessageCreator::~MessageCreator() {}
