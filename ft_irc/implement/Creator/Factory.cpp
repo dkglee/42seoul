@@ -1,9 +1,13 @@
 #include "../../header/Factory.hpp"
 #include "../../header/AuthOperation.hpp"
+#include "../../header/Kick.hpp"
+#include "../../header/Invite.hpp"
+#include "../../header/Topic.hpp"
+#include "../../header/Mode.hpp"
 
+// 예외 케이스 및 에러 처리 할것.
 IOperation* AuthCreator::factoryMethod(char* buf, int buf_size) {
 	// split 후 각각에 원하는 정보를 담기.
-	// 예외 케이스 및 에러 처리 할것.
 	AuthOperation* ret = new AuthOperation();
 	int args = 0;
 	int i = 0, j = 0;
@@ -28,25 +32,46 @@ IOperation* AuthCreator::factoryMethod(char* buf, int buf_size) {
 AuthCreator::~AuthCreator() {}
 
 IOperation* OpKickCreator::factoryMethod(char* buf, int buf_size) {
-
+	KickOperation* ret = new KickOperation();
+	std::string temp(buf);
+	std::string nick(temp.begin() + 6, temp.end());
+	ret->setNickname(nick);
+	return ret;
 }
 
 OpKickCreator::~OpKickCreator() {}
 
 IOperation* OpInviteCreator::factoryMethod(char* buf, int buf_size) {
-
+	InviteOperation* ret = new InviteOperation();
+	std::string temp(buf);
+	std::string nick(temp.begin() + 8, temp.end());
+	ret->setNickname(nick);
+	return ret;
 }
 
 OpInviteCreator::~OpInviteCreator() {}
 
 IOperation* OpTopicCreator::factoryMethod(char* buf, int buf_size) {
-
+	TopicOperation* ret = new TopicOperation();
+	std::string temp(buf);
+	std::string topic(temp.begin() + 7, temp.end());
+	ret->setTopic(topic);
+	return ret;
 }
 
 OpTopicCreator::~OpTopicCreator() {}
 
 IOperation* OpModeCreator::factoryMethod(char* buf, int buf_size) {
-
+	ModeOperation* ret = new ModeOperation();
+	std::string temp(buf);
+	char mode = temp[7];
+	if (temp.size() > 8) {
+		std::string operand(temp.begin() + 9, temp.end());
+		ret->setMode(mode, operand);
+	} else {
+		ret->setMode(mode);
+	}
+	return ret;
 }
 
 OpModeCreator::~OpModeCreator() {}
