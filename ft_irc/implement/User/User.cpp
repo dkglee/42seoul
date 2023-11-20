@@ -34,3 +34,7 @@ int User::getChannel() {
 void User::setChannel(int n) {
 	this->assocChannel = n;
 }
+
+void User::setOP() {
+	op = ~op;
+}

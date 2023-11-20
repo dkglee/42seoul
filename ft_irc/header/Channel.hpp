@@ -11,6 +11,7 @@ private:
 	bool inviteFlag;
 	bool keyFlag;
 	bool topicFlag;
+	bool limitFlag;
 	// info
 	int ulimit;
 	std::string topic;
@@ -21,6 +22,12 @@ public:
 	void removeUser(std::string);
 	void setTopic(std::string);
 	std::vector<int> getUserSocketList();
+	int findUser(std::string);
+	// 추후에 멤버 함수 포인터로 관리해야겠다.
+	bool changeInviteMode();
+	bool changeTopicMode();
+	bool changeKeyMode(int key);
+	bool changeUserLimitMode(int num);
 };
 
 #endif

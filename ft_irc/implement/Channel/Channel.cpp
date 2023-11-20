@@ -25,3 +25,39 @@ std::vector<int> Channel::getUserSocketList() {
 	}
 	return ret;
 }
+
+bool Channel::changeInviteMode() {
+	return inviteFlag = ~inviteFlag;
+}
+
+bool Channel::changeTopicMode() {
+	return inviteFlag = ~inviteFlag;
+}
+
+bool Channel::changeKeyMode(int key) {
+	if (key == -1) {
+		return keyFlag = false;
+	} else {
+		this->key = key;
+		return keyFlag = true;
+	}
+}
+
+bool Channel::changeUserLimitMode(int num) {
+	if (num == -1) {
+		return limitFlag = false;
+	} else {
+		this->ulimit = num;
+		return limitFlag = true;
+	}
+}
+
+int Channel::findUser(std::string nickName) {
+	for (std::vector<std::pair<int, std::string> >::iterator it = users.begin(); it != users.end(); it++) {
+		if (it->second == nickName) {
+			return it->first; 
+		}
+	}
+	return -1;
+}
+

@@ -5,6 +5,7 @@
 # include <string>
 # include "User.hpp"
 # include "Channel.hpp"
+# include "Socket.hpp"
 
 typedef std::map<int, User> r_list;
 typedef std::map<std::string, User> b_list;

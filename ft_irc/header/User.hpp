@@ -26,6 +26,7 @@ public:
 	void setNewUser(bool, std::string, std::string);
 	std::string getNick();
 	bool isOP();
+	void setOP();
 	void kicked();
 	int getChannel();
 	void setChannel(int n);
