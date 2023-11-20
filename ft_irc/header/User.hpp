@@ -20,6 +20,15 @@ private:
 // User Socket Info
 	Socket sock_info;
 	// struct sockaddr_in user_adr;
+	void setNick(std::string);
+	void setUser(std::string);
+public:
+	void setNewUser(bool, std::string, std::string);
+	std::string getNick();
+	bool isOP();
+	void kicked();
+	int getChannel();
+	void setChannel(int n);
 };
 
 #endif

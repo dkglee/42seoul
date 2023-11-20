@@ -56,11 +56,12 @@ private:
 
 	// User & Channels
 	Channel chs[CHANNEL_SIZE];
+	// std::vector<Channel> chs;
 	std::map<int, User> running_user_lists;
 	std::map<std::string, User> backup_user_lists;
 
 	// DB
-	Database db_tool;
+	Database* db_tool;
 	
 	// tool
 	Socket* sock_tool;

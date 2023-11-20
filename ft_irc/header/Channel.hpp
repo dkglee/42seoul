@@ -15,6 +15,9 @@ private:
 	std::string topic;
 	std::vector<std::string> users;
 	int key;
+public:
+	void addUser(std::string);
+	void removeUser(std::string);
 };
 
 #endif

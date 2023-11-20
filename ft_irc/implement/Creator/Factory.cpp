@@ -28,9 +28,6 @@ IOperation* AuthCreator::factoryMethod(char* buf, int buf_size) {
 			i = j;
 		}
 	}
-	if (args == 2) {
-		ret->setValue("0", 3);
-	}
 	return ret;
 }
 

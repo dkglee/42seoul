@@ -3,16 +3,19 @@
 
 # include "IOperation.hpp"
 
+class AuthOperation;
+
+typedef std::string AuthOperation::*AuthPtr;
+
 class AuthOperation : public IOperation {
 private:
 	bool flag;
 	std::string password;
 	std::string userName;
 	std::string nickName;
-	std::string channel;
 public:
 	void setValue(std::string val, int offset);
-	virtual void runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, int fd);
+	virtual int runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, int fd, int pw);
 	virtual ~AuthOperation();
 };
 
