@@ -17,8 +17,10 @@ private:
 	std::vector<std::pair<int, std::string> > users;
 	int key;
 public:
-	void addUser(std::string);
+	void addUser(int socket, std::string);
 	void removeUser(std::string);
+	void setTopic(std::string);
+	std::vector<int> getUserSocketList();
 };
 
 #endif
