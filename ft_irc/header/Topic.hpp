@@ -8,7 +8,7 @@ private:
 	std::string topic;
 public:
 	void setTopic(std::string);
-	virtual void runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, int fd);
+	virtual int runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, int fd, int key);
 	virtual ~TopicOperation();
 };
 

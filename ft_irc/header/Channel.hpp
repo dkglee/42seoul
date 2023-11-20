@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <utility>
 
 class Channel {
 private:
@@ -13,7 +14,7 @@ private:
 	// info
 	int ulimit;
 	std::string topic;
-	std::vector<std::string> users;
+	std::vector<std::pair<int, std::string> > users;
 	int key;
 public:
 	void addUser(std::string);
