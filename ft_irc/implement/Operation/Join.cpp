@@ -32,14 +32,18 @@ int JoinOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, 
 	}
 	if (chs[toJoinChannel].getUserSocketList().size() == 0) {
 		executor->second.setChannel(toJoinChannel);
+		chs[toJoinChannel].addUser(executor->first, executor->second.getNick());
 		executor->second.setOP();
+		broadcast(chs, executor, toJoinChannel);
 	} else {
 		if (authUser(chs, executor)) {
 			executor->second.setChannel(toJoinChannel);
+			chs[0].removeUser(executor->second.getNick());
 			chs[toJoinChannel].addUser(executor->first, executor->second.getNick());
 			broadcast(chs, executor, toJoinChannel);
 		}
 	}
+
 	return 0;
 }
 

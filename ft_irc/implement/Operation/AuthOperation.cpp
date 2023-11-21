@@ -29,9 +29,9 @@ int AuthOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, 
 		r_list::iterator it = ru_list.find(fd);
 		// bu_list.insert({userName, it->second});
 	}
-	chs[0].addUser(fd, userName);
+	chs[0].addUser(fd, nickName);
 	std::string sendMsg= "Welcome ";
-	sendMsg = sendMsg + userName;
+	sendMsg = sendMsg + nickName;
 	sendMsg = sendMsg + "\n";
 	send(fd, sendMsg.c_str(), strlen(sendMsg.c_str()), 0);
 	return 0;
