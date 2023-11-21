@@ -42,6 +42,8 @@
 // Operation
 # include "IOperation.hpp"
 
+bool server_running;
+
 // use default destructor
 class Server {
 private:
@@ -79,6 +81,7 @@ private:
 public:
 	Server(const char*, const char*);
 	void runServer();
+	~Server();
 };
 
 #endif

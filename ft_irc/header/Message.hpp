@@ -6,7 +6,7 @@
 class MessageOperation : public IOperation {
 private:
 	std::string msg;
-	void broadcast(r_list::iterator);
+	void broadcast(Channel*, r_list::iterator);
 public:
 	void setMessage(std::string);
 	virtual int runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, int fd, int key);
