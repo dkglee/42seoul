@@ -39,7 +39,7 @@ AuthCreator::~AuthCreator() {}
 IOperation* OpKickCreator::factoryMethod(char* buf, int buf_size) {
 	KickOperation* ret = new KickOperation();
 	std::string temp(buf);
-	std::string nick(temp.begin() + 6, temp.end());
+	std::string nick(temp.begin() + 6, temp.end() - 1);
 	ret->setNickname(nick);
 	return ret;
 }
@@ -49,7 +49,7 @@ OpKickCreator::~OpKickCreator() {}
 IOperation* OpInviteCreator::factoryMethod(char* buf, int buf_size) {
 	InviteOperation* ret = new InviteOperation();
 	std::string temp(buf);
-	std::string nick(temp.begin() + 8, temp.end());
+	std::string nick(temp.begin() + 8, temp.end() - 1);
 	ret->setNickname(nick);
 	return ret;
 }
@@ -59,7 +59,7 @@ OpInviteCreator::~OpInviteCreator() {}
 IOperation* OpTopicCreator::factoryMethod(char* buf, int buf_size) {
 	TopicOperation* ret = new TopicOperation();
 	std::string temp(buf);
-	std::string topic(temp.begin() + 7, temp.end());
+	std::string topic(temp.begin() + 7, temp.end() - 1);
 	ret->setTopic(topic);
 	return ret;
 }
@@ -71,7 +71,7 @@ IOperation* OpModeCreator::factoryMethod(char* buf, int buf_size) {
 	std::string temp(buf);
 	char mode = temp[7];
 	if (temp.size() > 8) {
-		std::string operand(temp.begin() + 9, temp.end());
+		std::string operand(temp.begin() + 9, temp.end() - 1);
 		ret->setMode(mode, operand);
 	} else {
 		ret->setMode(mode);

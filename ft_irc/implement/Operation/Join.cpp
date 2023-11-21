@@ -17,7 +17,7 @@ void JoinOperation::broadcast(Channel* chs, r_list::iterator executor, int chann
 	std::vector<int> list = chs[channel].getUserSocketList();
 	std::string sendMsg("User ");
 	sendMsg = sendMsg + executor->second.getNick();
-	sendMsg = sendMsg + " has joined this channel.";
+	sendMsg = sendMsg + " has joined this channel.\n";
 	for (std::vector<int>::iterator it = list.begin(); it != list.end(); it++) {
 		send(*it, sendMsg.c_str(), strlen(sendMsg.c_str()), 0);
 	}
@@ -33,6 +33,7 @@ int JoinOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, 
 	if (chs[toJoinChannel].getUserSocketList().size() == 0) {
 		executor->second.setChannel(toJoinChannel);
 		chs[toJoinChannel].addUser(executor->first, executor->second.getNick());
+		chs[0].removeUser(executor->second.getNick());
 		executor->second.setOP();
 		broadcast(chs, executor, toJoinChannel);
 	} else {

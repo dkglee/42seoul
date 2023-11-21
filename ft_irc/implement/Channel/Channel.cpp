@@ -6,7 +6,7 @@ void Channel::addUser(int socket, std::string user) {
 
 void Channel::removeUser(std::string user) {
 	for (std::vector<std::pair<int, std::string> >::iterator it = this->users.begin(); it != this->users.end(); it++) {
-		if (it->second == user) {
+		if (!it->second.compare(user)) {
 			this->users.erase(it);
 			break;
 		}
