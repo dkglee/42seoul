@@ -101,6 +101,7 @@ int ModeOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, 
 			send(executor->first, sendMsg, strlen(sendMsg), 0);
 		}
 	}
+	return 0;
 }
 
 ModeOperation::~ModeOperation() {}

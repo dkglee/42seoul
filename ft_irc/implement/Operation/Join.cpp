@@ -37,6 +37,7 @@ int JoinOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, 
 		if (authUser(chs, executor)) {
 			executor->second.setChannel(toJoinChannel);
 			chs[toJoinChannel].addUser(executor->first, executor->second.getNick());
+			broadcast(chs, executor, toJoinChannel);
 		}
 	}
 	return 0;
