@@ -61,3 +61,6 @@ int Channel::findUser(std::string nickName) {
 	return -1;
 }
 
+bool Channel::authenticateUser(int iKey) {
+	return !keyFlag || key == iKey;
+}

@@ -15,6 +15,7 @@ private:
 	// info
 	int ulimit;
 	std::string topic;
+	// int - socket, string - nickname
 	std::vector<std::pair<int, std::string> > users;
 	int key;
 public:
@@ -28,6 +29,8 @@ public:
 	bool changeTopicMode();
 	bool changeKeyMode(int key);
 	bool changeUserLimitMode(int num);
+	// Auth
+	bool authenticateUser(int);
 };
 
 #endif

@@ -7,9 +7,11 @@ class JoinOperation : public IOperation {
 private:
 	std::string channel;
 	std::string key;
+	bool authUser(Channel*, r_list::iterator);
+	void broadcast(Channel*, int);
 public:
 	void setJoin(std::string chn, std::string key);
-	virtual void runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, int fd);
+	virtual int runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, int fd, int key);
 	virtual ~JoinOperation();
 };
 
