@@ -18,20 +18,19 @@ OpCreator::~OpCreator() {}
 IOperation* AuthCreator::factoryMethod(char* buf, int buf_size) {
 	// split 후 각각에 원하는 정보를 담기.
 	AuthOperation* ret = new AuthOperation();
-	int args = 0;
-	int i = 0, j = 0;
 	std::string temp(buf);
-	while (i <= j && j <= temp.size()) {
-		if (temp[j] == ' ' || temp[j] == '|' || j == temp.size()) {
-			std::string parsed(temp.begin() + i, temp.begin() + j);
-			ret->setValue(parsed, args);
-			args += 1;
-			while (temp[j] != ' ' || temp[j] == '|' && j != temp.size()) {
-				j++;
-			}
-			i = j;
-		}
+	
+
+	std::istringstream iss(temp);
+	char delimiter = ' ';
+	std::vector<std::string> args;
+	std::string temp_buf;
+	while (getline(iss, temp_buf, delimiter)) {
+		args.push_back(temp_buf);
 	}
+	std::cout << args.size() << std::endl;
+	args[2].erase(args[2].find('\n'));
+	ret->setValue(args[0], args[1], args[2]);
 	return ret;
 }
 
@@ -92,6 +91,7 @@ IOperation* JoinCreator::factoryMethod(char* buf, int buf_size) {
 	while (getline(iss, temp_buf, delimiter)) {
 		args.push_back(temp_buf);
 	}
+	args[args.size() - 1].erase(args[args.size() - 1].find('\n'));
 	if (args.size() > 2)
 		ret->setJoin(args[1], args[2]);
 	else

@@ -1,10 +1,11 @@
 NAME = ft_irc
 
 CC = clang++
+CXX = g++
 
 RM = rm -rf
 
-WFLAGS = -Wall -Wextra -Werror
+WFLAGS = -g
 
 CFLAGS = ${WFLAGS}
 
@@ -26,8 +27,11 @@ SRCS = main.cpp \
 
 OBJS = ${SRCS:.cpp=.o}
 
+%.o: %.cpp
+	$(CXX) $(CFLAGS) -c $< -o $@
+
 ${NAME} : ${OBJS}
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(CC) -g $(OBJS) -o $(NAME)
 
 all : $(NAME)
 

@@ -21,7 +21,7 @@ std::vector<int> Channel::getUserSocketList() {
 	std::vector<int> ret(users.size());
 	std::vector<std::pair<int, std::string> >::iterator own = users.begin();
 	for (std::vector<int>::iterator it = ret.begin(); it != ret.end(); it++) {
-		*it = own->first;
+		*it = own++->first;
 	}
 	return ret;
 }

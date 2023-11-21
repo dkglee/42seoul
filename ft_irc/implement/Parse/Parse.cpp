@@ -1,5 +1,6 @@
 #include "../../header/Parse.hpp"
 #include <iostream>
+#include <cstring>
 #include <sstream>
 
 IOperation* Parse::swithParseOperation() {
@@ -13,15 +14,15 @@ IOperation* Parse::swithParseOperation() {
 
 	IOperation* ret;
 	Creator* create_tool;
-	if (temp_buf.compare("/kick")) {
+	if (!temp_buf.compare("/kick")) {
 		create_tool = new OpKickCreator();
-	} else if (temp_buf.compare("/invite")) {
+	} else if (!temp_buf.compare("/invite")) {
 		create_tool = new OpInviteCreator();
-	} else if (temp_buf.compare("/topic")) {
+	} else if (!temp_buf.compare("/topic")) {
 		create_tool = new OpTopicCreator();
-	} else if (temp_buf.compare("/mode")) {
+	} else if (!temp_buf.compare("/mode")) {
 		create_tool = new OpModeCreator();
-	} else if (temp_buf.compare("/join")) {
+	} else if (!temp_buf.compare("/join")) {
 		create_tool = new JoinCreator();
 	}
 	ret = create_tool->factoryMethod(buf, BUFF_SIZE);
@@ -45,5 +46,6 @@ IOperation* Parse::parseBuf(int fd, r_list& ru_list, b_list& bk_list) {
 			delete creat_tool;
 		}
 	}
+	std::memset(this->buf, 0, sizeof(this->buf));
 	return ret;
 }
