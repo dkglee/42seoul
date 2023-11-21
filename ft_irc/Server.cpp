@@ -51,6 +51,7 @@ void Server::runServer() {
 					if (fds[i].revents & POLLIN) {
 						op_tool = parse_tool.parseBuf(fds[i].fd, running_user_lists, backup_user_lists);
 						op_tool->runOperation(chs, running_user_lists, backup_user_lists, fds[i].fd, pw);
+						delete op_tool;
 					}
 				}
 			}
@@ -58,4 +59,3 @@ void Server::runServer() {
 	}
 	close(serv_sock.getSocket());
 }
-

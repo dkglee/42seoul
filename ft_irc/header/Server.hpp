@@ -12,7 +12,7 @@
 # include <poll.h>
 // socket
 # include <sys/socket.h>
-# include <Socket.hpp>
+# include "Socket.hpp"
 // TCP
 # include <netinet/in.h>
 # include <arpa/inet.h>
@@ -42,7 +42,10 @@
 // Operation
 # include "IOperation.hpp"
 
-bool server_running;
+// # ifndef GLOBAL_SERVER_RUNNING_STATE
+// #  define GLOBAL_SERVER_RUNNING_STATE
+extern bool server_running;
+// # endif
 
 // use default destructor
 class Server {

@@ -27,6 +27,7 @@ int AuthOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, 
 	std::string sendMsg= "Welcome";
 	sendMsg += nickName;
 	send(fd, sendMsg.c_str(), strlen(sendMsg.c_str()), 0);
+	return 0;
 }
 
 AuthOperation::~AuthOperation() {}

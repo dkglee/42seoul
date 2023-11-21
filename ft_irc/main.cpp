@@ -1,5 +1,7 @@
 #include "./header/Server.hpp"
 
+bool server_running;
+
 void handle_signal(int signum) {
 	if (signum == SIGINT) {
 		std::cout << "Received SIGINT, Shutting down server." << std::endl;

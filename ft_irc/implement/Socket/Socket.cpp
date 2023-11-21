@@ -11,7 +11,7 @@ Socket Socket::createSocket(int port) {
 
 	if (bind(ret.sockNum, (struct sockaddr*)&ret.sock_adr, ret.adr_sz) == -1)  {
 		// error
-		return ;
+		// return ;
 	}
 	return ret;
 }

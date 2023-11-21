@@ -8,20 +8,20 @@ void ModeOperation::setMode(char c, std::string op) {
 
 void ModeOperation::inviteMode(r_list::iterator executor, Channel* chs) {
 	if (!chs[executor->second.getChannel()].changeInviteMode()) {
-		char *sendMsg = "This Channel is now Invite-Only.";
+		const char *sendMsg = "This Channel is now Invite-Only.";
 		send(executor->first, sendMsg, strlen(sendMsg), 0);
 	} else {
-		char *sendMsg = "The Invite-Only mode has been lifted.";
+		const char *sendMsg = "The Invite-Only mode has been lifted.";
 		send(executor->first, sendMsg, strlen(sendMsg), 0);
 	}
 }
 
 void ModeOperation::topicMode(r_list::iterator executor, Channel* chs) {
 	if (!chs[executor->second.getChannel()].changeTopicMode()) {
-		char *sendMsg = "Topic is now Operator-Only.";
+		const char *sendMsg = "Topic is now Operator-Only.";
 		send(executor->first, sendMsg, strlen(sendMsg), 0);
 	} else {
-		char *sendMsg = "The Operator-Only mode has been lifted.";
+		const char *sendMsg = "The Operator-Only mode has been lifted.";
 		send(executor->first, sendMsg, strlen(sendMsg), 0);
 	}
 }
@@ -29,11 +29,11 @@ void ModeOperation::topicMode(r_list::iterator executor, Channel* chs) {
 void ModeOperation::keyMode(r_list::iterator executor, Channel* chs) {
 	if (this->operand.empty()) {
 		chs[executor->second.getChannel()].changeKeyMode(-1);
-		char *sendMsg = "Key is disabled.";
+		const char *sendMsg = "Key is disabled.";
 		send(executor->first, sendMsg, strlen(sendMsg), 0);
 	} else {
 		chs[executor->second.getChannel()].changeKeyMode(atoi(this->operand.c_str()));
-		char *sendMsg = "Key is set";
+		const char *sendMsg = "Key is set";
 		send(executor->first, sendMsg, strlen(sendMsg), 0);
 	}
 }
@@ -50,12 +50,12 @@ void ModeOperation::operatorMode(r_list::iterator executor, Channel* chs, r_list
 		} else {
 			if (!user->second.isOP()) {
 				user->second.setOP();
-				char *sendMsg = "User is now Operator";
+				const char *sendMsg = "User is now Operator";
 				send(executor->first, sendMsg, strlen(sendMsg), 0);
 				send(user->first, sendMsg, strlen(sendMsg), 0);
 			} else {
 				user->second.setOP();
-				char *sendMsg = "User is now just Client";
+				const char *sendMsg = "User is now just Client";
 				send(executor->first, sendMsg, strlen(sendMsg), 0);
 				send(user->first, sendMsg, strlen(sendMsg), 0);
 			}
@@ -66,11 +66,11 @@ void ModeOperation::operatorMode(r_list::iterator executor, Channel* chs, r_list
 void ModeOperation::limitMode(r_list::iterator executor, Channel* chs) {
 	if (this->operand.empty()) {
 		chs[executor->second.getChannel()].changeUserLimitMode(-1);
-		char *sendMsg = "User is unlimited.";
+		const char *sendMsg = "User is unlimited.";
 		send(executor->first, sendMsg, strlen(sendMsg), 0);
 	} else {
 		chs[executor->second.getChannel()].changeUserLimitMode(atoi(this->operand.c_str()));
-		char *sendMsg = "User is limited.";
+		const char *sendMsg = "User is limited.";
 		send(executor->first, sendMsg, strlen(sendMsg), 0);
 	}
 }
@@ -97,8 +97,9 @@ int ModeOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, 
 			this->limitMode(executor, chs);
 			break ;
 		default :
-			char* sendMsg = "There is No such Mode";
+			const char* sendMsg = "There is No such Mode";
 			send(executor->first, sendMsg, strlen(sendMsg), 0);
+			break ;
 		}
 	}
 	return 0;

@@ -10,6 +10,10 @@
 #include <vector>
 #include <iostream>
 
+Creator::~Creator() {}
+
+OpCreator::~OpCreator() {}
+
 // 예외 케이스 및 에러 처리 할것.
 IOperation* AuthCreator::factoryMethod(char* buf, int buf_size) {
 	// split 후 각각에 원하는 정보를 담기.

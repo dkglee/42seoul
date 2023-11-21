@@ -7,7 +7,7 @@
 class Creator {
 public:
 	virtual IOperation* factoryMethod(char* buf, int buf_size) = 0;
-	virtual ~Creator() = 0;
+	virtual ~Creator();
 };
 
 class AuthCreator : public Creator {
@@ -19,7 +19,7 @@ public:
 class OpCreator : public Creator {
 public:
 	virtual IOperation* factoryMethod(char* buf, int buf_size) = 0;
-	virtual ~OpCreator() = 0;
+	virtual ~OpCreator();
 };
 
 class OpKickCreator : public OpCreator {

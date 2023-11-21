@@ -10,18 +10,19 @@ CFLAGS = ${WFLAGS}
 
 SRCS = main.cpp \
 		Server.cpp \
-		./Implement/Channel/Channel.cpp \
-		./Implement/Creator/Factory.cpp \
-		./Implement/Operation/AuthOperation.cpp \
-		./Implement/Operation/Invite.cpp \
-		./Implement/Operation/Join.cpp \
-		./Implement/Operation/Kick.cpp \
-		./Implement/Operation/Message.cpp \
-		./Implement/Operation/Mode.cpp \
-		./Implement/Operation/Topic.cpp \
-		./Implement/Parse/Parse.cpp \
-		./Implement/Socket/Socket.cpp \
-		./Implement/User/User.cpp
+		./implement/Channel/Channel.cpp \
+		./implement/Creator/Factory.cpp \
+		./implement/Operation/IOperation.cpp \
+		./implement/Operation/AuthOperation.cpp \
+		./implement/Operation/Invite.cpp \
+		./implement/Operation/Join.cpp \
+		./implement/Operation/Kick.cpp \
+		./implement/Operation/Message.cpp \
+		./implement/Operation/Mode.cpp \
+		./implement/Operation/Topic.cpp \
+		./implement/Parse/Parse.cpp \
+		./implement/Socket/Socket.cpp \
+		./implement/User/User.cpp
 
 OBJS = ${SRCS:.cpp=.o}
 

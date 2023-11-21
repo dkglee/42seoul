@@ -25,7 +25,7 @@ int InviteOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list
 		invited->second.setChannel(executer->second.getChannel());
 		chs[0].removeUser(nickname);
 		chs[executer->second.getChannel()].addUser(invited->first, nickname);
-		char *str = "You are Invited";
+		const char *str = "You are Invited";
 		send(invited->first, str, strlen(str), 0);
 	}
 	return 0;
