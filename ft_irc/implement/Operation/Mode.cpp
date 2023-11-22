@@ -33,7 +33,7 @@ void ModeOperation::keyMode(r_list::iterator executor, Channel* chs) {
 		send(executor->first, sendMsg, strlen(sendMsg), 0);
 	} else {
 		chs[executor->second.getChannel()].changeKeyMode(atoi(this->operand.c_str()));
-		const char *sendMsg = "Key is set";
+		const char *sendMsg = "Key is set.\n";
 		send(executor->first, sendMsg, strlen(sendMsg), 0);
 	}
 }
@@ -88,7 +88,9 @@ void ModeOperation::limitMode(r_list::iterator executor, Channel* chs) {
 int ModeOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, int fd, int key) {
 	r_list::iterator executor = ru_list.find(fd);
 	if (!executor->second.isOP()) {
-		// No Permission
+		const char* msg = "You have no Permission\n";
+		send(executor->first, msg, strlen(msg), 0);
+		return -1;
 	} else {
 		switch (mode) {
 		case 'i' :

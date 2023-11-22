@@ -39,8 +39,10 @@ int InviteOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list
 		const char *str = "You are Invited\n";
 		send(invited->first, str, strlen(str), 0);
 		std::string topic = chs[invited->second.getChannel()].getTopic();
-		if (topic.size() != 0)
+		if (topic.size() != 0) {
+			topic = topic + '\n';
 			send(invited->first, topic.c_str(), strlen(topic.c_str()), 0);
+		}
 	}
 	return 0;
 }

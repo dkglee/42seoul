@@ -14,7 +14,7 @@ int TopicOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list,
 	} else {
 		chs[executer->second.getChannel()].setTopic(topic);
 		std::vector<int> usersSocket = chs[executer->second.getChannel()].getUserSocketList();
-		const char* sendMsg = "Please check as the topic has been newly set. - from channel operator\n";
+		const char* sendMsg = "Please check as the topic has been newly set. - from channel operator.\n";
 		for (std::vector<int>::iterator it = usersSocket.begin(); it != usersSocket.end(); it++) {
 			send(*it, sendMsg, strlen(sendMsg), 0);
 		}
