@@ -17,6 +17,10 @@ void Channel::setTopic(std::string topic) {
 	this->topic = topic;
 }
 
+std::string Channel::getTopic() {
+	return this->topic;
+}
+
 std::vector<int> Channel::getUserSocketList() {
 	std::vector<int> ret(users.size());
 	std::vector<std::pair<int, std::string> >::iterator own = users.begin();
@@ -27,11 +31,23 @@ std::vector<int> Channel::getUserSocketList() {
 }
 
 bool Channel::changeInviteMode() {
-	return inviteFlag = ~inviteFlag;
+	if (inviteFlag == false) {
+		inviteFlag = true;
+		return true;
+	} else {
+		inviteFlag = false;
+		return false;
+	}
 }
 
 bool Channel::changeTopicMode() {
-	return inviteFlag = ~inviteFlag;
+	if (topicFlag == false) {
+		topicFlag = true;
+		return true;
+	} else {
+		topicFlag = false;
+		return false;
+	}
 }
 
 bool Channel::changeKeyMode(int key) {

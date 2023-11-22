@@ -70,7 +70,7 @@ IOperation* OpModeCreator::factoryMethod(char* buf, int buf_size) {
 	ModeOperation* ret = new ModeOperation();
 	std::string temp(buf);
 	char mode = temp[7];
-	if (temp.size() > 8) {
+	if (temp.size() > 9) {
 		std::string operand(temp.begin() + 9, temp.end() - 1);
 		ret->setMode(mode, operand);
 	} else {

@@ -44,7 +44,10 @@ int JoinOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, 
 			broadcast(chs, executor, toJoinChannel);
 		}
 	}
-
+	std::string topic = chs[toJoinChannel].getTopic();
+	if (topic.size() != 0) {
+		send(executor->first, topic.c_str(), strlen(topic.c_str()), 0);
+	}
 	return 0;
 }
 

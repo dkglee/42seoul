@@ -14,7 +14,7 @@ int InviteOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list
 	} else {
 		r_list::iterator invited;
 		for (invited = ru_list.begin(); invited != ru_list.end(); invited++) {
-			if (nickname.compare(invited->second.getNick())) {
+			if (!nickname.compare(invited->second.getNick())) {
 				break ;
 			}
 		}
@@ -25,8 +25,11 @@ int InviteOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list
 		invited->second.setChannel(executer->second.getChannel());
 		chs[0].removeUser(nickname);
 		chs[executer->second.getChannel()].addUser(invited->first, nickname);
-		const char *str = "You are Invited";
+		const char *str = "You are Invited\n";
 		send(invited->first, str, strlen(str), 0);
+		std::string topic = chs[invited->second.getChannel()].getTopic();
+		if (topic.size() != 0)
+			send(invited->first, topic.c_str(), strlen(topic.c_str()), 0);
 	}
 	return 0;
 }

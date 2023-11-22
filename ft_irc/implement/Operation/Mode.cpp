@@ -8,20 +8,20 @@ void ModeOperation::setMode(char c, std::string op) {
 
 void ModeOperation::inviteMode(r_list::iterator executor, Channel* chs) {
 	if (!chs[executor->second.getChannel()].changeInviteMode()) {
-		const char *sendMsg = "This Channel is now Invite-Only.";
+		const char *sendMsg = "This Channel is now Invite-Only\n.";
 		send(executor->first, sendMsg, strlen(sendMsg), 0);
 	} else {
-		const char *sendMsg = "The Invite-Only mode has been lifted.";
+		const char *sendMsg = "The Invite-Only mode has been lifted\n.";
 		send(executor->first, sendMsg, strlen(sendMsg), 0);
 	}
 }
 
 void ModeOperation::topicMode(r_list::iterator executor, Channel* chs) {
 	if (!chs[executor->second.getChannel()].changeTopicMode()) {
-		const char *sendMsg = "Topic is now Operator-Only.";
+		const char *sendMsg = "Topic is now Operator-Only\n.";
 		send(executor->first, sendMsg, strlen(sendMsg), 0);
 	} else {
-		const char *sendMsg = "The Operator-Only mode has been lifted.";
+		const char *sendMsg = "The Operator-Only mode has been lifted\n.";
 		send(executor->first, sendMsg, strlen(sendMsg), 0);
 	}
 }
@@ -29,7 +29,7 @@ void ModeOperation::topicMode(r_list::iterator executor, Channel* chs) {
 void ModeOperation::keyMode(r_list::iterator executor, Channel* chs) {
 	if (this->operand.empty()) {
 		chs[executor->second.getChannel()].changeKeyMode(-1);
-		const char *sendMsg = "Key is disabled.";
+		const char *sendMsg = "Key is disabled\n.";
 		send(executor->first, sendMsg, strlen(sendMsg), 0);
 	} else {
 		chs[executor->second.getChannel()].changeKeyMode(atoi(this->operand.c_str()));
@@ -66,11 +66,11 @@ void ModeOperation::operatorMode(r_list::iterator executor, Channel* chs, r_list
 void ModeOperation::limitMode(r_list::iterator executor, Channel* chs) {
 	if (this->operand.empty()) {
 		chs[executor->second.getChannel()].changeUserLimitMode(-1);
-		const char *sendMsg = "User is unlimited.";
+		const char *sendMsg = "User is unlimited\n.";
 		send(executor->first, sendMsg, strlen(sendMsg), 0);
 	} else {
 		chs[executor->second.getChannel()].changeUserLimitMode(atoi(this->operand.c_str()));
-		const char *sendMsg = "User is limited.";
+		const char *sendMsg = "User is limited\n.";
 		send(executor->first, sendMsg, strlen(sendMsg), 0);
 	}
 }
