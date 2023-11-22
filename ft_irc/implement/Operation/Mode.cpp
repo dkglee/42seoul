@@ -42,11 +42,15 @@ void ModeOperation::keyMode(r_list::iterator executor, Channel* chs) {
 void ModeOperation::operatorMode(r_list::iterator executor, Channel* chs, r_list& ru_list, b_list& bu_list) {
 	int OperandSocket = chs[executor->second.getChannel()].findUser(operand);
 	if (OperandSocket == -1) {
-		// No User in the Channel
+		const char* msg = "There is no such user in this Channel.\n";
+		send(executor->first, msg, strlen(msg), 0);
+		return ;
 	} else {
 		r_list::iterator user = ru_list.find(OperandSocket);
 		if (user == ru_list.end()) {
-			// No User in the Server
+			const char* msg = "There is no such user in this Server.\n";
+			send(executor->first, msg, strlen(msg), 0);
+			return ;
 		} else {
 			if (!user->second.isOP()) {
 				user->second.setOP();
@@ -64,14 +68,20 @@ void ModeOperation::operatorMode(r_list::iterator executor, Channel* chs, r_list
 }
 
 void ModeOperation::limitMode(r_list::iterator executor, Channel* chs) {
-	if (this->operand.empty()) {
-		chs[executor->second.getChannel()].changeUserLimitMode(-1);
-		const char *sendMsg = "User is unlimited.\n";
-		send(executor->first, sendMsg, strlen(sendMsg), 0);
+	if (!(this->operand.empty()) && chs[executor->second.getChannel()].isFull()) {
+		const char* msg = "The number of Users in this Channel is greater than your limits\n";
+		send(executor->first, msg, strlen(msg), 0);
+		return ;
 	} else {
-		chs[executor->second.getChannel()].changeUserLimitMode(atoi(this->operand.c_str()));
-		const char *sendMsg = "User is limited.\n";
-		send(executor->first, sendMsg, strlen(sendMsg), 0);
+		if (this->operand.empty()) {
+			chs[executor->second.getChannel()].changeUserLimitMode(-1);
+			const char *sendMsg = "User is unlimited.\n";
+			send(executor->first, sendMsg, strlen(sendMsg), 0);
+		} else {
+			chs[executor->second.getChannel()].changeUserLimitMode(atoi(this->operand.c_str()));
+			const char *sendMsg = "User is limited.\n";
+			send(executor->first, sendMsg, strlen(sendMsg), 0);
+		}
 	}
 }
 

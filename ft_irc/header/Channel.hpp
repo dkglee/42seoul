@@ -25,6 +25,7 @@ public:
 	std::vector<int> getUserSocketList();
 	int findUser(std::string);
 	std::string getTopic();
+	bool getTopicFlag();
 	// 추후에 멤버 함수 포인터로 관리해야겠다.
 	bool changeInviteMode();
 	bool changeTopicMode();
@@ -32,6 +33,8 @@ public:
 	bool changeUserLimitMode(int num);
 	// Auth
 	bool authenticateUser(int);
+	// UserLimit
+	bool isFull();
 };
 
 #endif

@@ -80,3 +80,14 @@ int Channel::findUser(std::string nickName) {
 bool Channel::authenticateUser(int iKey) {
 	return !keyFlag || key == iKey;
 }
+
+bool Channel::isFull() {
+	if (limitFlag == true && users.size() >= ulimit) {
+		return true;
+	}
+	return false;
+}
+
+bool Channel::getTopicFlag() {
+	return this->topicFlag;
+}

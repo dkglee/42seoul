@@ -7,8 +7,10 @@ void TopicOperation::setTopic(std::string n) {
 
 int TopicOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, int fd, int key) {
 	r_list::iterator executer = ru_list.find(fd);
-	if (!executer->second.isOP()) {
-		// no Permission
+	if (chs[executer->second.getChannel()].getTopicFlag() && !executer->second.isOP()) {
+		const char* msg = "You have no Permission.\n";
+		send(executer->first, msg, strlen(msg), 0);
+		return -1;
 	} else {
 		chs[executer->second.getChannel()].setTopic(topic);
 		std::vector<int> usersSocket = chs[executer->second.getChannel()].getUserSocketList();

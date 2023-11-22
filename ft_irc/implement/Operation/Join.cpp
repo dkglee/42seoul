@@ -28,7 +28,9 @@ int JoinOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, 
 	r_list::iterator executor = ru_list.find(fd);
 	int toJoinChannel = atoi(channel.c_str());
 	if (executor->second.getChannel() != 0) {
-		// executor should be in Channel 0
+		const char* msg = "You have to be Channel 0.\n";
+		send(executor->first, msg, strlen(msg), 0);
+		return -1;
 	}
 	if (chs[toJoinChannel].getUserSocketList().size() == 0) {
 		executor->second.setChannel(toJoinChannel);
@@ -37,11 +39,21 @@ int JoinOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, 
 		executor->second.setOP();
 		broadcast(chs, executor, toJoinChannel);
 	} else {
-		if (authUser(chs, executor)) {
-			executor->second.setChannel(toJoinChannel);
-			chs[0].removeUser(executor->second.getNick());
-			chs[toJoinChannel].addUser(executor->first, executor->second.getNick());
-			broadcast(chs, executor, toJoinChannel);
+		if (chs[toJoinChannel].isFull()) {
+			const char* msg = "Channel You are tyring to join is already Full.\n";
+			send(executor->first, msg, strlen(msg), 0);
+			return -1;
+		} else {
+			if (authUser(chs, executor)) {
+				executor->second.setChannel(toJoinChannel);
+				chs[0].removeUser(executor->second.getNick());
+				chs[toJoinChannel].addUser(executor->first, executor->second.getNick());
+				broadcast(chs, executor, toJoinChannel);
+			} else {
+				const char* msg = "Wrong Key Try Again.\n";
+				send(executor->first, msg, strlen(msg), 0);
+				return -1;
+			}
 		}
 	}
 	std::string topic = chs[toJoinChannel].getTopic();

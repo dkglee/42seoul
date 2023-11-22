@@ -10,7 +10,9 @@ void InviteOperation::setNickname(std::string n) {
 int InviteOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, int fd, int key) {
 	r_list::iterator executer = ru_list.find(fd);
 	if (!executer->second.isOP()) {
-		// No Permission
+		const char* msg = "You have no Permission.\n";
+		send(executer->first, msg, strlen(msg), 0);
+		return -1;
 	} else {
 		r_list::iterator invited;
 		for (invited = ru_list.begin(); invited != ru_list.end(); invited++) {
@@ -18,9 +20,18 @@ int InviteOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list
 				break ;
 			}
 		}
-		if (invited->second.getChannel() != 0 || invited == ru_list.end()) {
-			// He's not in Channel 0
-			// He's not in Server
+		if (invited->second.getChannel() != 0) {
+			const char* msg = "User is not in Channel 0.\n";
+			send(executer->first, msg, strlen(msg), 0);
+			return -1;
+		} else if (invited == ru_list.end()) {
+			const char* msg = "User is not in Server.\n";
+			send(executer->first, msg, strlen(msg), 0);
+			return -1;
+		} else if (chs[executer->second.getChannel()].isFull()) {
+			const char* msg = "Channel is already full\n";
+			send(executer->first, msg, strlen(msg), 0);
+			return -1;
 		}
 		invited->second.setChannel(executer->second.getChannel());
 		chs[0].removeUser(nickname);
