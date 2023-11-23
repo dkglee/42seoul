@@ -45,6 +45,10 @@ IOperation* Parse::swithParseOperation(std::vector<std::string>& parsed) {
 IOperation* Parse::parseBuf(int fd, r_list& ru_list, b_list& bk_list) {
 	int strlen = sock_tool->readBuff(fd, buf);
 	std::vector<std::string> parsed = parseOperationArguments();
+	if (parsed.empty()) {
+		// try로 바꿔서 처리하자. 아예 나간거로 처리 소켓을 폐기 시켜야함.
+		return NULL;
+	}
 	parsed[parsed.size() - 1].erase(parsed[parsed.size() - 1].find('\n'));
 	IOperation* ret;
 	if (ru_list.find(fd) == ru_list.end()) {

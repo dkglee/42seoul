@@ -68,8 +68,8 @@ void ModeOperation::operatorMode(r_list::iterator executor, Channel* chs, r_list
 }
 
 void ModeOperation::limitMode(r_list::iterator executor, Channel* chs) {
-	if (!(this->operand.empty()) && chs[executor->second.getChannel()].isFull()) {
-		const char* msg = "The number of Users in this Channel is greater than your limits\n";
+	if (!(this->operand.empty()) && chs[executor->second.getChannel()].getUserSocketList().size() > atoi(this->operand.c_str())) {
+		const char* msg = "The number of Users in this Channel is greater than your limits.\n";
 		send(executor->first, msg, strlen(msg), 0);
 		return ;
 	} else {

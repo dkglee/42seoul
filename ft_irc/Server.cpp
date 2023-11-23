@@ -18,7 +18,6 @@ void Server::init(int servSock) {
 	nfds = 1;
 }
 
-
 void Server::runServer() {
 	Socket serv_sock = sock_tool->createSocket(port);
 	
