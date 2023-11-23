@@ -26,6 +26,7 @@ public:
 	int findUser(std::string);
 	std::string getTopic();
 	bool getTopicFlag();
+	bool getInviteFlag();
 	// 추후에 멤버 함수 포인터로 관리해야겠다.
 	bool changeInviteMode();
 	bool changeTopicMode();

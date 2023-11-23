@@ -15,8 +15,13 @@ void AuthOperation::setValue(std::string pw, std::string un, std::string ni) {
 int AuthOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, int fd, int pw) {
 	std::cout << password << ' ' << userName << ' ' << nickName << std::endl;
 
+	if (password.size() != 0 || userName.size() != 0 || nickName.size() != 0) {
+		send(fd, "Please keep this form. == Password(space)Username(space)Nickname.\n", strlen("Please keep this form. == Password(space)Username(space)Nickname.\n"), 0);
+		return -1;
+	}
 	if (atoi(this->password.c_str()) != pw) {
-		// err
+		send(fd, "Password is wrong, Please try again.\n", strlen("Password is wrong, Please try again.\n"), 0);
+		return -1;
 	}
 	b_list::iterator it = bu_list.find(userName);
 	if (it != bu_list.end()) {

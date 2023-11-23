@@ -44,6 +44,11 @@ int JoinOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, 
 			send(executor->first, msg, strlen(msg), 0);
 			return -1;
 		} else {
+			if (chs[toJoinChannel].getInviteFlag()) {
+				const char* msg = "This Channel is Invite Only.\n";
+				send(executor->first, msg, strlen(msg), 0);
+				return -1;
+			}
 			if (authUser(chs, executor)) {
 				executor->second.setChannel(toJoinChannel);
 				chs[0].removeUser(executor->second.getNick());

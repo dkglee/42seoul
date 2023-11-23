@@ -19,7 +19,6 @@ IOperation* AuthCreator::factoryMethod(char* buf, int buf_size) {
 	// split 후 각각에 원하는 정보를 담기.
 	AuthOperation* ret = new AuthOperation();
 	std::string temp(buf);
-	
 
 	std::istringstream iss(temp);
 	char delimiter = ' ';

@@ -46,10 +46,10 @@ void Server::runServer() {
 				cli_sock = sock_tool->accepSocket(fds[0].fd);
 				// 최적화 할 예정
 				std::cout << "Client is Trying to Connect" << std::endl;
+				send(cli_sock.getSocket(), "give me a password\n", strlen("give me a password\n"), 0);
 				for (int i = 0; i < POLL_SIZE; i++) {
 					if (fds[i].fd == 0) {
 						std::cout << "Client is set in POLL" << std::endl;
-						// send(cli_sock.getSocket(), "give me a password\n", strlen("give me a password\n"), 0);
 						fds[i].fd = cli_sock.getSocket();
 						fds[i].events = POLLIN;
 						nfds += 1;

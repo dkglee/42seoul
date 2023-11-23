@@ -91,3 +91,7 @@ bool Channel::isFull() {
 bool Channel::getTopicFlag() {
 	return this->topicFlag;
 }
+
+bool Channel::getInviteFlag() {
+	return this->inviteFlag;
+}

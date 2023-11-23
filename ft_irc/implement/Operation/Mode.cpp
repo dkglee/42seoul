@@ -7,7 +7,7 @@ void ModeOperation::setMode(char c, std::string op) {
 }
 
 void ModeOperation::inviteMode(r_list::iterator executor, Channel* chs) {
-	if (!chs[executor->second.getChannel()].changeInviteMode()) {
+	if (chs[executor->second.getChannel()].changeInviteMode()) {
 		const char *sendMsg = "This Channel is now Invite-Only.\n";
 		send(executor->first, sendMsg, strlen(sendMsg), 0);
 	} else {
@@ -17,7 +17,7 @@ void ModeOperation::inviteMode(r_list::iterator executor, Channel* chs) {
 }
 
 void ModeOperation::topicMode(r_list::iterator executor, Channel* chs) {
-	if (!chs[executor->second.getChannel()].changeTopicMode()) {
+	if (chs[executor->second.getChannel()].changeTopicMode()) {
 		const char *sendMsg = "Topic is now Operator-Only.\n";
 		send(executor->first, sendMsg, strlen(sendMsg), 0);
 	} else {
