@@ -109,7 +109,7 @@ int ModeOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, 
 			this->limitMode(executor, chs);
 			break ;
 		default :
-			const char* sendMsg = "There is No such Mode";
+			const char* sendMsg = "There is No such Mode.\n";
 			send(executor->first, sendMsg, strlen(sendMsg), 0);
 			break ;
 		}

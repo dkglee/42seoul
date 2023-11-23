@@ -60,7 +60,10 @@ void Server::runServer() {
 				for (int i = 1; i < POLL_SIZE; i++) {
 					if (fds[i].revents & POLLIN) {
 						std::cout << "Client is typing" << std::endl;
-						op_tool = parse_tool.parseBuf(fds[i].fd, running_user_lists, backup_user_lists);
+						if ((op_tool = parse_tool.parseBuf(fds[i].fd, running_user_lists, backup_user_lists)) == NULL) {
+							send(fds[i].fd, "Wrong Argument.\n", strlen("Wrong Argument.\n"), 0);
+							continue ;
+						}
 						std::cout << "Parsing is done" << std::endl;
 						op_tool->runOperation(chs, running_user_lists, backup_user_lists, fds[i].fd, pw);
 						delete op_tool;
@@ -69,5 +72,6 @@ void Server::runServer() {
 			}
 		}
 	}
+	std::cout << "test" << std::endl;
 	close(serv_sock.getSocket());
 }

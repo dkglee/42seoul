@@ -15,10 +15,11 @@ void AuthOperation::setValue(std::string pw, std::string un, std::string ni) {
 int AuthOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, int fd, int pw) {
 	std::cout << password << ' ' << userName << ' ' << nickName << std::endl;
 
-	if (password.size() != 0 || userName.size() != 0 || nickName.size() != 0) {
-		send(fd, "Please keep this form. == Password(space)Username(space)Nickname.\n", strlen("Please keep this form. == Password(space)Username(space)Nickname.\n"), 0);
-		return -1;
-	}
+	// creator에서 처리하면 된다.
+	// if (password.size() != 0 || userName.size() != 0 || nickName.size() != 0) {
+	// 	send(fd, "Please keep this form. == Password(space)Username(space)Nickname.\n", strlen("Please keep this form. == Password(space)Username(space)Nickname.\n"), 0);
+	// 	return -1;
+	// }
 	if (atoi(this->password.c_str()) != pw) {
 		send(fd, "Password is wrong, Please try again.\n", strlen("Password is wrong, Please try again.\n"), 0);
 		return -1;

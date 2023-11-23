@@ -12,6 +12,7 @@ CFLAGS = ${WFLAGS}
 SRCS = main.cpp \
 		Server.cpp \
 		./implement/Channel/Channel.cpp \
+		./implement/String/Stringtool.cpp \
 		./implement/Creator/Factory.cpp \
 		./implement/Operation/IOperation.cpp \
 		./implement/Operation/AuthOperation.cpp \

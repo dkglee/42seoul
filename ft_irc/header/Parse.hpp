@@ -18,7 +18,8 @@ class Parse {
 private:
 	Socket* sock_tool;
 	char buf[BUFF_SIZE];
-	IOperation* swithParseOperation();
+	IOperation* swithParseOperation(std::vector<std::string>&);
+	std::vector<std::string> parseOperationArguments();
 public:
 	IOperation* parseBuf(int, r_list&, b_list&);
 };

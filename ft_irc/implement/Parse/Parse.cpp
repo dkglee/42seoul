@@ -3,47 +3,62 @@
 #include <cstring>
 #include <sstream>
 
-IOperation* Parse::swithParseOperation() {
-	// 조건 분기문 최적화를 할 필요가 있을듯
+std::vector<std::string> Parse::parseOperationArguments() {
 	std::string temp(buf);
 	std::istringstream iss(temp);
 	
 	std::string temp_buf;
 	char delemiter = ' ';
-	getline(iss, temp_buf, ' ');
+	std::vector<std::string> ret;
+	while (getline(iss, temp_buf, ' ')) {
+		ret.push_back(temp_buf);
+	}
+	return ret;
+}
 
+IOperation* Parse::swithParseOperation(std::vector<std::string>& parsed) {
+	// 조건 분기문 최적화를 할 필요가 있을듯
 	IOperation* ret;
 	Creator* create_tool;
-	if (!temp_buf.compare("/kick")) {
-		create_tool = new OpKickCreator();
-	} else if (!temp_buf.compare("/invite")) {
-		create_tool = new OpInviteCreator();
-	} else if (!temp_buf.compare("/topic")) {
-		create_tool = new OpTopicCreator();
-	} else if (!temp_buf.compare("/mode")) {
-		create_tool = new OpModeCreator();
-	} else if (!temp_buf.compare("/join")) {
-		create_tool = new JoinCreator();
+	if (parsed.size() < 2) {
+		return NULL;
 	}
-	ret = create_tool->factoryMethod(buf, BUFF_SIZE);
+	if (!parsed[0].compare("/kick")) {
+		create_tool = new OpKickCreator();
+	} else if (!parsed[0].compare("/invite")) {
+		create_tool = new OpInviteCreator();
+	} else if (!parsed[0].compare("/topic")) {
+		create_tool = new OpTopicCreator();
+	} else if (!parsed[0].compare("/mode")) {
+		create_tool = new OpModeCreator();
+	} else if (!parsed[0].compare("/join")) {
+		create_tool = new JoinCreator();
+	} else {
+		// No Such Operator
+		return NULL;
+	}
+	ret = create_tool->factoryMethod(parsed);
 	delete create_tool;
 	return ret;
 }
 
 IOperation* Parse::parseBuf(int fd, r_list& ru_list, b_list& bk_list) {
 	int strlen = sock_tool->readBuff(fd, buf);
+	std::vector<std::string> parsed = parseOperationArguments();
+	parsed[parsed.size() - 1].erase(parsed[parsed.size() - 1].find('\n'));
 	IOperation* ret;
 	if (ru_list.find(fd) == ru_list.end()) {
-		Creator* creat_tool = new AuthCreator();
-		ret = creat_tool->factoryMethod(buf, BUFF_SIZE);
-		delete creat_tool;
-	} else {
+		Creator* create_tool = new AuthCreator();
+		ret = create_tool->factoryMethod(parsed);
+		delete create_tool;
+	 }
+	else {
 		if (buf[0] == '/')
-			ret = swithParseOperation();
+			ret = swithParseOperation(parsed);
 		else {
-			Creator* creat_tool = new MessageCreator();
-			ret = creat_tool->factoryMethod(buf, BUFF_SIZE);
-			delete creat_tool;
+			Creator* create_tool = new MessageCreator();
+			ret = create_tool->factoryMethod(parsed);
+			delete create_tool;
 		}
 	}
 	std::memset(this->buf, 0, sizeof(this->buf));
