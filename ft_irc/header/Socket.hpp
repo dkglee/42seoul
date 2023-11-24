@@ -11,7 +11,7 @@
 // stl
 # include <string>
 
-# define BUFF_SIZE 1500
+# define BUFF_SIZE 15000
 
 class Socket {
 private:

@@ -1,7 +1,7 @@
 #ifndef PARSE_HPP
 # define PARSE_HPP
 
-# define BUFF_SIZE 1500
+# define BUFF_SIZE 15000
 
 # include "IOperation.hpp"
 # include "User.hpp"

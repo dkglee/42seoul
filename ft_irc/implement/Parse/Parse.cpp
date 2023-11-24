@@ -41,7 +41,6 @@ IOperation* Parse::swithParseOperation(std::vector<std::string>& parsed) {
 		ret = create_tool->factoryMethod(parsed);
 	} catch (MyException&) {
 		delete create_tool;
-		std::cout << "ERRRRR" << std::endl;
 		throw;
 	}
 	return ret;
