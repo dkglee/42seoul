@@ -24,7 +24,8 @@ SRCS = main.cpp \
 		./implement/Operation/Topic.cpp \
 		./implement/Parse/Parse.cpp \
 		./implement/Socket/Socket.cpp \
-		./implement/User/User.cpp
+		./implement/User/User.cpp \
+		./implement/Exception/Exception.cpp
 
 OBJS = ${SRCS:.cpp=.o}
 

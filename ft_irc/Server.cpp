@@ -77,6 +77,7 @@ void Server::runServer() {
 							std::cerr << e.what() << std::endl;
 							case EXITEXCEPTION :
 								removeUser(fds[i].fd);
+								std::cout << "Client[" << fds[i].fd << "] exits server." << std::endl;
 								close(fds[i].fd);
 								nfds -= 1;
 								std::memset(&fds[i], 0, sizeof(fds[i]));

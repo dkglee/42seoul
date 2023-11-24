@@ -7,7 +7,7 @@ void MessageOperation::setMessage(std::string msg) {
 
 void MessageOperation::broadcast(Channel* chs, r_list::iterator executor) {
 	std::string retmsg(executor->second.getNick());
-	retmsg = retmsg + ": " + msg + '\n';
+	retmsg = retmsg + ": " + msg;
 	std::vector<int> list = chs[executor->second.getChannel()].getUserSocketList();
 	for (std::vector<int>::iterator it = list.begin(); it != list.end(); it++) {
 		sock_tool->sendMsg(*it, retmsg.c_str());

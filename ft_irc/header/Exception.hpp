@@ -11,7 +11,7 @@ enum ErrorCode {
 	OPERATIONEXCEPTION,
 };
 
-class MyException : public std::exception {
+class MyException {
 private:
 	ErrorCode err_no;
 public:

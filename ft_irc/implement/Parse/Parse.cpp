@@ -44,10 +44,10 @@ IOperation* Parse::swithParseOperation(std::vector<std::string>& parsed) {
 
 IOperation* Parse::parseBuf(int fd, r_list& ru_list, b_list& bk_list) {
 	int strlen = sock_tool->readBuff(fd, buf);
-	std::vector<std::string> parsed = parseOperationArguments();
-	if (parsed.empty()) {
+	if (strlen == 0) {
 		throw ExitException(EXITEXCEPTION, "Client exits from the Server.");
 	}
+	std::vector<std::string> parsed = parseOperationArguments();
 	parsed[parsed.size() - 1].erase(parsed[parsed.size() - 1].find('\n'));
 	IOperation* ret;
 	try {

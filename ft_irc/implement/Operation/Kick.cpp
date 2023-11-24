@@ -20,7 +20,7 @@ int KickOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, 
 			kicked->second.kicked();
 			chs[executer->second.getChannel()].removeUser(nickname);
 			chs[0].addUser(kicked->first, nickname);
-			const char* msg = "You are kicked from the Channel.\n";
+			const char* msg = "You are kicked from the Channel.";
 			sock_tool->sendMsg(kicked->first, msg);
 		} else {
 			throw OperationException(OPERATIONEXCEPTION, "There is No User in this Channel.");
