@@ -42,6 +42,9 @@
 // Operation
 # include "IOperation.hpp"
 
+// Exception
+# include "Exception.hpp"
+
 // # ifndef GLOBAL_SERVER_RUNNING_STATE
 // #  define GLOBAL_SERVER_RUNNING_STATE
 extern bool server_running;
@@ -62,13 +65,14 @@ private:
 	// User & Channels
 	Channel chs[CHANNEL_SIZE];
 	// std::vector<Channel> chs;
-	std::map<int, User> running_user_lists;
-	std::map<std::string, User> backup_user_lists;
+	r_list running_user_lists;
+	b_list backup_user_lists;
 
 	// DB
 	Database* db_tool;
 	
-	// tool
+	// tool & Server Socket
+	Socket serv_sock;
 	Socket* sock_tool;
 
 	// Not Permitted Methods of Creating Instance
@@ -81,6 +85,7 @@ private:
 	// Operation Interface
 	IOperation* op_tool;
 	
+	void removeUser(int fd);
 public:
 	Server(const char*, const char*);
 	void runServer();

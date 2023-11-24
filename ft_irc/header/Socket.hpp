@@ -23,6 +23,7 @@ public:
 	Socket accepSocket(int fd);
 	int getSocket();
 	int readBuff(int fd, char* buf);
+	void sendMsg(int fd, const char* buf);
 };
 
 #endif
