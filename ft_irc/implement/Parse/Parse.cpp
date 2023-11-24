@@ -37,8 +37,13 @@ IOperation* Parse::swithParseOperation(std::vector<std::string>& parsed) {
 	} else {
 		throw ParseException(PARSEEXCEPTION, "There is No Such Operation.");
 	}
-	ret = create_tool->factoryMethod(parsed);
-	delete create_tool;
+	try {
+		ret = create_tool->factoryMethod(parsed);
+	} catch (MyException&) {
+		delete create_tool;
+		std::cout << "ERRRRR" << std::endl;
+		throw;
+	}
 	return ret;
 }
 
