@@ -5,6 +5,7 @@
 #include "../../header/Topic.hpp"
 #include "../../header/Mode.hpp"
 #include "../../header/Join.hpp"
+#include "../../header/Exception.hpp"
 #include "../../header/Message.hpp"
 #include <sstream>
 #include <vector>
@@ -17,8 +18,7 @@ OpCreator::~OpCreator() {}
 // 예외 케이스 및 에러 처리 할것.
 IOperation* AuthCreator::factoryMethod(std::vector<std::string>& parsed) {
 	if (parsed.size() != 3) {
-		// send Message Keep auth form
-		return NULL;
+		throw ParseException(PARSEEXCEPTION, "Authorization Should give as follows: password(space)username(space)nickname. try again");
 	}
 	AuthOperation* ret = new AuthOperation();
 	ret->setValue(parsed[0], parsed[1], parsed[2]);
@@ -29,8 +29,7 @@ AuthCreator::~AuthCreator() {}
 
 IOperation* OpKickCreator::factoryMethod(std::vector<std::string>& parsed) {
 	if (parsed.size() != 2) {
-		// Should be 2 args
-		return NULL;
+		throw ParseException(PARSEEXCEPTION, "Kick Operation: Should be as follow: /kick [nickname]. try again");
 	}
 	KickOperation* ret = new KickOperation();
 	ret->setNickname(parsed[1]);
@@ -41,8 +40,7 @@ OpKickCreator::~OpKickCreator() {}
 
 IOperation* OpInviteCreator::factoryMethod(std::vector<std::string>& parsed) {
 	if (parsed.size() != 2) {
-		// Should be 2 args
-		return NULL;
+		throw ParseException(PARSEEXCEPTION, "Invite Operation: Should be as follow: /invite [nickname]. try again");
 	}
 	InviteOperation* ret = new InviteOperation();
 	ret->setNickname(parsed[1]);
@@ -64,12 +62,10 @@ OpTopicCreator::~OpTopicCreator() {}
 IOperation* OpModeCreator::factoryMethod(std::vector<std::string>& parsed) {
 	ModeOperation* ret = new ModeOperation();
 	if (parsed.size() > 3) {
-		// Should be 2 or 3
-		return NULL;
+		throw ParseException(PARSEEXCEPTION, "Wrong Mode Args List: It should have one or two arguments: /mode [-todo] [arg]. try again");
 	}
 	if (parsed[1][0] != '-') {
-		// Should start with '-'
-		return NULL;
+		throw ParseException(PARSEEXCEPTION, "Wrong Type : It should start with - : /mode [-todo] [arg]");
 	}
 	if (parsed[1].size() == 2) {
 		if (parsed.size() == 3) {

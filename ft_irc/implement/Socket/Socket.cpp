@@ -31,3 +31,9 @@ int Socket::readBuff(int fd, char* buf) {
 	int strlen = recv(fd, (void *)buf, BUFF_SIZE, 0);
 	return strlen;
 }
+
+void Socket::sendMsg(int fd, const char* buf) {
+	std::string str(buf);
+	str += '\n';
+	send(fd, str.c_str(), strlen(str.c_str()), 0);
+}

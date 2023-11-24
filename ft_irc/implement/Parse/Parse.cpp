@@ -1,4 +1,5 @@
 #include "../../header/Parse.hpp"
+#include "../../header/Exception.hpp"
 #include <iostream>
 #include <cstring>
 #include <sstream>
@@ -21,7 +22,7 @@ IOperation* Parse::swithParseOperation(std::vector<std::string>& parsed) {
 	IOperation* ret;
 	Creator* create_tool;
 	if (parsed.size() < 2) {
-		return NULL;
+		throw ParseException(PARSEEXCEPTION, "Wrong Args lists try again.");
 	}
 	if (!parsed[0].compare("/kick")) {
 		create_tool = new OpKickCreator();
@@ -34,8 +35,7 @@ IOperation* Parse::swithParseOperation(std::vector<std::string>& parsed) {
 	} else if (!parsed[0].compare("/join")) {
 		create_tool = new JoinCreator();
 	} else {
-		// No Such Operator
-		return NULL;
+		throw ParseException(PARSEEXCEPTION, "There is No Such Operation.");
 	}
 	ret = create_tool->factoryMethod(parsed);
 	delete create_tool;
@@ -46,24 +46,27 @@ IOperation* Parse::parseBuf(int fd, r_list& ru_list, b_list& bk_list) {
 	int strlen = sock_tool->readBuff(fd, buf);
 	std::vector<std::string> parsed = parseOperationArguments();
 	if (parsed.empty()) {
-		// try로 바꿔서 처리하자. 아예 나간거로 처리 소켓을 폐기 시켜야함.
-		return NULL;
+		throw ExitException(EXITEXCEPTION, "Client exits from the Server.");
 	}
 	parsed[parsed.size() - 1].erase(parsed[parsed.size() - 1].find('\n'));
 	IOperation* ret;
-	if (ru_list.find(fd) == ru_list.end()) {
-		Creator* create_tool = new AuthCreator();
-		ret = create_tool->factoryMethod(parsed);
-		delete create_tool;
-	 }
-	else {
-		if (buf[0] == '/')
-			ret = swithParseOperation(parsed);
-		else {
-			Creator* create_tool = new MessageCreator();
+	try {
+		if (ru_list.find(fd) == ru_list.end()) {
+			Creator* create_tool = new AuthCreator();
 			ret = create_tool->factoryMethod(parsed);
 			delete create_tool;
 		}
+		else {
+			if (buf[0] == '/')
+				ret = swithParseOperation(parsed);
+			else {
+				Creator* create_tool = new MessageCreator();
+				ret = create_tool->factoryMethod(parsed);
+				delete create_tool;
+			}
+		}
+	} catch (MyException&) {
+		throw ;
 	}
 	std::memset(this->buf, 0, sizeof(this->buf));
 	return ret;

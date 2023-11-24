@@ -6,11 +6,11 @@ void MessageOperation::setMessage(std::string msg) {
 }
 
 void MessageOperation::broadcast(Channel* chs, r_list::iterator executor) {
-	std::string sendMsg(executor->second.getNick());
-	sendMsg = sendMsg + ": " + msg + '\n';
+	std::string retmsg(executor->second.getNick());
+	retmsg = retmsg + ": " + msg + '\n';
 	std::vector<int> list = chs[executor->second.getChannel()].getUserSocketList();
 	for (std::vector<int>::iterator it = list.begin(); it != list.end(); it++) {
-		send(*it, sendMsg.c_str(), strlen(sendMsg.c_str()), 0);
+		sock_tool->sendMsg(*it, retmsg.c_str());
 	}
 }
 

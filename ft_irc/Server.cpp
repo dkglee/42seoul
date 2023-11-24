@@ -9,6 +9,8 @@ Server::~Server() {
 	for (std::map<int, User>::iterator it = running_user_lists.begin(); it != running_user_lists.end(); it++) {
 		close(it->first);
 	}
+	close(serv_sock.getSocket());
+	std::memset(fds, 0, sizeof(fds));
 }
 
 void Server::init(int servSock) {
@@ -18,8 +20,16 @@ void Server::init(int servSock) {
 	nfds = 1;
 }
 
+void Server::removeUser(int fd) {
+	r_list::iterator user = running_user_lists.find(fd);
+	if (user != running_user_lists.end()) {
+		chs[user->second.getChannel()].removeUser(user->second.getNick());
+		running_user_lists.erase(user);
+	}
+}
+
 void Server::runServer() {
-	Socket serv_sock = sock_tool->createSocket(port);
+	serv_sock = sock_tool->createSocket(port);
 	
 	if (listen(serv_sock.getSocket(), 5) == -1) {
 		// err
@@ -58,19 +68,31 @@ void Server::runServer() {
 			} else {
 				for (int i = 1; i < POLL_SIZE; i++) {
 					if (fds[i].revents & POLLIN) {
-						std::cout << "Client is typing" << std::endl;
-						if ((op_tool = parse_tool.parseBuf(fds[i].fd, running_user_lists, backup_user_lists)) == NULL) {
-							send(fds[i].fd, "Wrong Argument.\n", strlen("Wrong Argument.\n"), 0);
-							continue ;
+						try {
+							op_tool = parse_tool.parseBuf(fds[i].fd, running_user_lists, backup_user_lists);
+							op_tool->runOperation(chs, running_user_lists, backup_user_lists, fds[i].fd, pw);
+							delete op_tool;
+						} catch (MyException& e) {
+							switch (e.getErrCode()) {
+							std::cerr << e.what() << std::endl;
+							case EXITEXCEPTION :
+								removeUser(fds[i].fd);
+								close(fds[i].fd);
+								nfds -= 1;
+								std::memset(&fds[i], 0, sizeof(fds[i]));
+								break ;
+							case OPERATIONEXCEPTION :
+								sock_tool->sendMsg(fds[i].fd, e.what());
+								delete op_tool;
+								break ;
+							default:
+								sock_tool->sendMsg(fds[i].fd, e.what());
+								break ;
+							}
 						}
-						std::cout << "Parsing is done" << std::endl;
-						op_tool->runOperation(chs, running_user_lists, backup_user_lists, fds[i].fd, pw);
-						delete op_tool;
 					}
 				}
 			}
 		}
 	}
-	std::cout << "test" << std::endl;
-	close(serv_sock.getSocket());
 }

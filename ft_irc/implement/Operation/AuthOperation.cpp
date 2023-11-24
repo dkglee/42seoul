@@ -1,8 +1,9 @@
-#include "../../header/AuthOperation.hpp"
+#include <iostream>
 #include <cstring>
 #include <map>
+#include "../../header/AuthOperation.hpp"
 #include "../../header/User.hpp"
-#include <iostream>
+#include "../../header/Exception.hpp"
 
 void AuthOperation::setValue(std::string pw, std::string un, std::string ni) {
 	password = pw;
@@ -13,16 +14,8 @@ void AuthOperation::setValue(std::string pw, std::string un, std::string ni) {
 // 어떤 기능이 와야 하는가?
 // 패스워드 인증 -> 닉네임과 유저 네임 세팅 -> 백업 페이지에 등록(마지막 구현 예정) -> 공홈으로 채널 세팅 후 종료
 int AuthOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, int fd, int pw) {
-	std::cout << password << ' ' << userName << ' ' << nickName << std::endl;
-
-	// creator에서 처리하면 된다.
-	// if (password.size() != 0 || userName.size() != 0 || nickName.size() != 0) {
-	// 	send(fd, "Please keep this form. == Password(space)Username(space)Nickname.\n", strlen("Please keep this form. == Password(space)Username(space)Nickname.\n"), 0);
-	// 	return -1;
-	// }
 	if (atoi(this->password.c_str()) != pw) {
-		send(fd, "Password is wrong, Please try again.\n", strlen("Password is wrong, Please try again.\n"), 0);
-		return -1;
+		throw OperationException(OPERATIONEXCEPTION, "Your Password Is Wrong.");
 	}
 	b_list::iterator it = bu_list.find(userName);
 	if (it != bu_list.end()) {

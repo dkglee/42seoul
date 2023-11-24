@@ -1,4 +1,5 @@
 #include "../../header/Join.hpp"
+#include "../../header/Exception.hpp"
 #include <cstring>
 
 void JoinOperation::setJoin(std::string chn, std::string key) {
@@ -15,11 +16,11 @@ bool JoinOperation::authUser(Channel* chs, r_list::iterator executor) {
 
 void JoinOperation::broadcast(Channel* chs, r_list::iterator executor, int channel) {
 	std::vector<int> list = chs[channel].getUserSocketList();
-	std::string sendMsg("User ");
-	sendMsg = sendMsg + executor->second.getNick();
-	sendMsg = sendMsg + " has joined this channel.\n";
+	std::string msg("User ");
+	msg = msg + executor->second.getNick();
+	msg = msg + " has joined this channel.";
 	for (std::vector<int>::iterator it = list.begin(); it != list.end(); it++) {
-		send(*it, sendMsg.c_str(), strlen(sendMsg.c_str()), 0);
+		sock_tool->sendMsg(*it, msg.c_str());
 	}
 }
 
@@ -28,9 +29,7 @@ int JoinOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, 
 	r_list::iterator executor = ru_list.find(fd);
 	int toJoinChannel = atoi(channel.c_str());
 	if (executor->second.getChannel() != 0) {
-		const char* msg = "You have to be Channel 0.\n";
-		send(executor->first, msg, strlen(msg), 0);
-		return -1;
+		throw OperationException(OPERATIONEXCEPTION, "You have to be in Channel 0.");
 	}
 	if (chs[toJoinChannel].getUserSocketList().size() == 0) {
 		executor->second.setChannel(toJoinChannel);
@@ -40,14 +39,10 @@ int JoinOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, 
 		broadcast(chs, executor, toJoinChannel);
 	} else {
 		if (chs[toJoinChannel].isFull()) {
-			const char* msg = "Channel You are tyring to join is already Full.\n";
-			send(executor->first, msg, strlen(msg), 0);
-			return -1;
+			throw OperationException(OPERATIONEXCEPTION, "Channel You are tyring to join is already Full.");
 		} else {
 			if (chs[toJoinChannel].getInviteFlag()) {
-				const char* msg = "This Channel is Invite Only.\n";
-				send(executor->first, msg, strlen(msg), 0);
-				return -1;
+				throw OperationException(OPERATIONEXCEPTION, "This Channel is Invite Only.");
 			}
 			if (authUser(chs, executor)) {
 				executor->second.setChannel(toJoinChannel);
@@ -55,9 +50,7 @@ int JoinOperation::runOperation(Channel* chs, r_list& ru_list, b_list& bu_list, 
 				chs[toJoinChannel].addUser(executor->first, executor->second.getNick());
 				broadcast(chs, executor, toJoinChannel);
 			} else {
-				const char* msg = "Wrong Key Try Again.\n";
-				send(executor->first, msg, strlen(msg), 0);
-				return -1;
+				throw OperationException(OPERATIONEXCEPTION, "Wrong Key Try Again.");
 			}
 		}
 	}
