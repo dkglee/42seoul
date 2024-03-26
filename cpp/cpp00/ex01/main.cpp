@@ -1,7 +1,7 @@
 #include "phonebook.hpp"
 #include "contact.hpp"
 
-int getNum(std::string str)
+int getIndex(std::string str)
 {
 	if (str == "ADD")
 		return 0;
@@ -22,10 +22,11 @@ int main(void)
 	std::string temp;
 	while (1)
 	{
+		std::cout << "Choose ADD, SEARCH or EXIT" << std::endl;
 		std::cin >> temp;
-		int ch = getNum(temp);
+		int ch = getIndex(temp);
 		if (ch == -1)
-			std::cout << "Choose One of ADD, SEARCH, EXIT" << std::endl;
+			continue ;
 		else if (ch == 2) {
 			(P.*parr[2])();
 			break ;
