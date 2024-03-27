@@ -8,13 +8,14 @@ class Harl {
 private:
 	Harl(const Harl&);
 	Harl& operator=(const Harl&);
-public:
-	Harl();
-	~Harl();
+	int validate(std::string);
 	void debug(void);
 	void info(void);
 	void warning(void);
 	void error(void);
+public:
+	Harl();
+	~Harl();
 	void complain(std::string);
 };
 

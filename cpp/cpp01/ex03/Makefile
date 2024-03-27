@@ -1,10 +1,10 @@
 NAME = weapon
 
-CC = clang++
+CC = c++
 
 RM = rm -rf
 
-WFLAGS = -Wall -Wextra -Werror
+WFLAGS = -Wall -Wextra -Werror --std=c++98
 
 CFLAGS = $(WFLAGS)
 
@@ -17,6 +17,9 @@ OBJS = ${SRCS:.cpp=.o}
 
 ${NAME} : ${OBJS}
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
 
 all : ${NAME}
 

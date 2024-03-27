@@ -24,6 +24,16 @@ void Harl::error(void)
 	std::cout << "This is unacceptable! I want to speak to the manager now." << std::endl;
 }
 
+int Harl::validate(std::string level)
+{
+	if (level != "DEBUG" && level != "INFO" && level != "WARNING" && level != "ERROR")
+	{
+		std::cerr << "Invalid level: " << level << std::endl;
+		return 1;
+	}
+	return 0;
+}
+
 void Harl::complain(std::string level)
 {
 	typedef void (Harl::*HarlPtr)(void);
@@ -36,5 +46,6 @@ void Harl::complain(std::string level)
 	parr['E' - 65] = &Harl::error;
 
 	Harl obj;
-	(obj.*parr[level[0] - 65])();
+	if (!validate(level))
+		(obj.*parr[level[0] - 65])();
 }

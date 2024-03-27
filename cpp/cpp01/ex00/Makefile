@@ -1,10 +1,10 @@
 NAME = zombie
 
-CC = clang++
+CC = c++
 
 RM = rm -rf
 
-WFLAGS = -Wall -Wextra -Werror
+WFLAGS = -Wall -Wextra -Werror --std=c++98
 
 CFLAGS = $(WFLAGS)
 
@@ -13,7 +13,11 @@ SRCS = main.cpp \
 			newZombie.cpp \
 			randomChump.cpp
 
+
 OBJS = ${SRCS:.cpp=.o}
+
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
 
 ${NAME} : ${OBJS}
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
