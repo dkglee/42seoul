@@ -1,11 +1,11 @@
 #include "Harl.hpp"
 
-int main(void)
+int main(int argc, char *argv[])
 {
-	std::string str;
-	std::cin >> str;
-
-	Harl obj;
-	obj.complain(str);
+	if (argc == 2 && std::string(argv[1]).size() > 0)
+	{
+		Harl obj;
+		obj.complain(std::string(argv[1]));
+	}
 	return 0;
 }
