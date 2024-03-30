@@ -77,6 +77,7 @@ Fixed& Fixed::operator++() {
 }
 
 const Fixed Fixed::operator++(int dummy) {
+	static_cast<void>(dummy);
 	Fixed ret = *this;
 	++(*this);
 	return ret;
@@ -88,6 +89,7 @@ Fixed& Fixed::operator--() {
 }
 
 const Fixed Fixed::operator--(int dummy) {
+	static_cast<void>(dummy);
 	Fixed ret = *this;
 	--(*this);
 	return ret;
@@ -107,14 +109,23 @@ const Fixed Fixed::operator-(const Fixed& r) const {
 
 const Fixed Fixed::operator*(const Fixed& r) const {
 	Fixed ret;
-	ret.setRawBits((this->fnum * r.getRawBits()) >> fbits);
+	ret.setRawBits(static_cast<int>(
+		(static_cast<long long>(this->fnum)
+		* static_cast<long long>(r.getRawBits()))
+		>> fbits)
+		);
 	return ret;
 }
 
 const Fixed Fixed::operator/(const Fixed& r) const {
 	Fixed ret;
-	int c = this->fnum << fbits;
-	ret.setRawBits((c / r.getRawBits()));
+	long long c = static_cast<long long>(this->fnum) << fbits;
+	ret.setRawBits(static_cast<int>(
+		(c / static_cast<long long>(r.getRawBits())))
+		);
+	ret.setRawBits(static_cast<int>(
+		(c / r.getRawBits()))
+		);
 	return ret;
 }
 

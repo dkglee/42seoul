@@ -3,25 +3,25 @@
 const int Fixed::fbits = 8;
 
 Fixed::Fixed() : fnum(0) {
-	std::cout << "Default constructor called" << std::endl;
+	// std::cout << "Default constructor called" << std::endl;
 }
 
 Fixed::Fixed(const Fixed& o) : fnum(o.fnum) {
-	std::cout << "Copy constructor called" << std::endl;
+	// std::cout << "Copy constructor called" << std::endl;
 }
 
 Fixed& Fixed::operator=(const Fixed& r) {
-	std::cout << "Copy assignment operator called" << std::endl;
+	// std::cout << "Copy assignment operator called" << std::endl;
 	fnum = r.getRawBits();
 	return *this;
 }
 
 Fixed::~Fixed() {
-	std::cout << "Destructor called" << std::endl;
+	// std::cout << "Destructor called" << std::endl;
 }
 
 int Fixed::getRawBits(void) const {
-	std::cout << "getRawBits member function called" << std::endl;
+	// std::cout << "getRawBits member function called" << std::endl;
 	return this->fnum;
 }
 
@@ -30,12 +30,12 @@ void Fixed::setRawBits(int const raw) {
 }
 
 Fixed::Fixed(const int n) {
-	std::cout << "Int constructor called" << std::endl;
+	// std::cout << "Int constructor called" << std::endl;
 	this->fnum = n << 8;
 }
 
 Fixed::Fixed(const float f) {
-	std::cout << "Float constructor called" << std::endl;
+	// std::cout << "Float constructor called" << std::endl;
 	this->fnum = (int)(roundf(f * (1 << fbits)));
 }
 
@@ -84,6 +84,7 @@ Fixed& Fixed::operator++() {
 }
 
 const Fixed Fixed::operator++(int dummy) {
+	static_cast<void>(dummy);
 	Fixed ret = *this;
 	++(*this);
 	return ret;
@@ -95,6 +96,7 @@ Fixed& Fixed::operator--() {
 }
 
 const Fixed Fixed::operator--(int dummy) {
+	static_cast<void>(dummy);
 	Fixed ret = *this;
 	--(*this);
 	return ret;
@@ -114,14 +116,20 @@ const Fixed Fixed::operator-(const Fixed& r) const {
 
 const Fixed Fixed::operator*(const Fixed& r) const {
 	Fixed ret;
-	ret.setRawBits((this->fnum * r.getRawBits()) >> fbits);
+	ret.setRawBits(static_cast<int>(
+		(static_cast<long long>(this->fnum)
+		* static_cast<long long>(r.getRawBits()))
+		>> fbits)
+		);
 	return ret;
 }
 
 const Fixed Fixed::operator/(const Fixed& r) const {
 	Fixed ret;
-	int c = this->fnum << fbits;
-	ret.setRawBits((c / r.getRawBits()));
+	long long c = static_cast<long long>(this->fnum) << fbits;
+	ret.setRawBits(static_cast<int>(
+		(c / static_cast<long long>(r.getRawBits())))
+		);
 	return ret;
 }
 
