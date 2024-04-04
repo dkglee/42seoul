@@ -36,20 +36,21 @@ Fixed::Fixed(const int n) {
 
 Fixed::Fixed(const float f) {
 	std::cout << "Float constructor called" << std::endl;
-	this->fnum = (int)(roundf(f * (1 << fbits)));
+	this->fnum = static_cast<int>(roundf(f * (1 << fbits)));
 }
 
 
 float Fixed::toFloat(void) const {
-	return ((float)fnum / (float)(1 << fbits));
+	return (static_cast<float>(fnum) / static_cast<float>(1 << fbits));
 }
 
+
 int Fixed::toInt(void) const {
-	int ret = (*this).toFloat();
+	int ret = static_cast<int>((*this).toFloat());
 	return ret;
 }
 
-std::ostream& operator<<(std::ostream& c, const Fixed& obj) {
-	c << obj.toFloat();
-	return c;
-}
+// std::ostream& operator<<(std::ostream& c, const Fixed& obj) {
+// 	c << obj.toFloat();
+// 	return c;
+// }

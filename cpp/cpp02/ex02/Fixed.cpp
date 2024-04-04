@@ -49,11 +49,6 @@ int Fixed::toInt(void) const {
 	return ret;
 }
 
-std::ostream& operator<<(std::ostream& c, const Fixed& obj) {
-	c << obj.toFloat();
-	return c;
-}
-
 bool Fixed::operator==(const Fixed& r) const {
 	return this->fnum == r.getRawBits();
 }
