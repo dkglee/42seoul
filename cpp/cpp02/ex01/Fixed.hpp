@@ -4,8 +4,6 @@
 #include <iostream>
 #include <cmath>
 
-// std::ostream& operator<<(std::ostream&, const Fixed&);
-
 class Fixed {
 private:
 	int fnum;

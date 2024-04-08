@@ -2,7 +2,7 @@
 
 Fixed area(const Point& p1, const Point& p2, const Point& p3) {
 	Fixed a(2);
-	Fixed ret((p1.x * (p2.y - p3.y) + p2.x * (p3.y - p1.y) + p3.x * (p1.y - p2.y)) / a);
+	Fixed ret((p1.getx() * (p2.gety() - p3.gety()) + p2.getx() * (p3.gety() - p1.gety()) + p3.getx() * (p1.gety() - p2.gety())) / a);
 	if (ret < Fixed(0))
 		ret = ret * Fixed(-1);
 	return ret;

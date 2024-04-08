@@ -1,5 +1,10 @@
 #include "Point.hpp"
 
+std::ostream& operator<<(std::ostream& c, const Fixed& obj) {
+	c << obj.toFloat();
+	return c;
+}
+
 int main(void)
 {
 	Point a(0, 0), b(1, 2), c(2, 0);

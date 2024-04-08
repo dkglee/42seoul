@@ -13,3 +13,11 @@ Point& Point::operator=(const Point& r) {
 	y.setRawBits(r.y.getRawBits());
 	return *this;
 }
+
+Fixed Point::getx(void) const {
+	return x;
+}
+
+Fixed Point::gety(void) const {
+	return y;
+}
