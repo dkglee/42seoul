@@ -5,10 +5,10 @@
 
 class FragTrap : public ClapTrap {
 private:
+public:
 	FragTrap();
 	FragTrap(const FragTrap&);
 	FragTrap& operator=(const FragTrap&);
-public:
 	FragTrap(std::string n, int h = 100, int e = 100, int a = 30);
 	~FragTrap();
 	void attack(const std::string&);

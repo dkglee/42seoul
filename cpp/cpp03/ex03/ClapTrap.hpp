@@ -10,10 +10,10 @@ private:
 	int hitPoint;
 	int energyPoint;
 	int attackDamage;
+public:
 	ClapTrap();
 	ClapTrap(const ClapTrap&);
 	ClapTrap& operator=(const ClapTrap&);
-public:
 	ClapTrap(std::string n, int h = 10, int e = 10, int a = 0);
 	~ClapTrap();
 	void attack(const std::string&);

@@ -1,6 +1,6 @@
 NAME = clap
 
-CC = clang++
+CC = c++
 
 RM = rm -rf
 
@@ -14,6 +14,9 @@ SRCS = main.cpp \
 		FragTrap.cpp
 
 OBJS = ${SRCS:.cpp=.o}
+
+.o : .cpp
+	$(CC) $(CFLAGS) -c $< -o $@
 
 ${NAME} : ${OBJS}
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)

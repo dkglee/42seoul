@@ -1,5 +1,22 @@
 #include "FragTrap.hpp"
 
+
+FragTrap::FragTrap() : ClapTrap("default", 100, 50, 20) {
+	std::cout << "FragTrap constructor called" << std::endl;
+}
+
+FragTrap::FragTrap(const FragTrap& s) : ClapTrap(s) {
+	std::cout << "FragTrap copy constructor called" << std::endl;
+}
+
+FragTrap& FragTrap::operator=(const FragTrap& s) {
+	if (this == &s)
+		return *this;
+	std::cout << "FragTrap assignation operator called" << std::endl;
+	static_cast<ClapTrap&>(*this) = s;
+	return *this;
+}
+
 FragTrap::FragTrap(std::string n, int h, int e, int a) : ClapTrap(n, h, e, a) {
 	std::cout << "FragTrap constructor called" << std::endl;
 }
