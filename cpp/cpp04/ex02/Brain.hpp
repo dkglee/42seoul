@@ -7,10 +7,10 @@
 class Brain {
 private:
 	std::string arr[100];
-	Brain(const Brain&);
-	Brain& operator=(const Brain&);
 public:
 	Brain();
+	Brain(const Brain&);
+	Brain& operator=(const Brain&);
 	~Brain();
 };
 

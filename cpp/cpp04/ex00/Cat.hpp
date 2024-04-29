@@ -5,10 +5,10 @@
 
 class Cat : public Animal {
 private:
-	Cat(const Cat&);
-	Cat& operator=(const Cat&);
 public:
 	Cat(std::string n = "Cat");
+	Cat(const Cat&);
+	Cat& operator=(const Cat&);
 	virtual ~Cat();
 	virtual void makeSound() const;
 };

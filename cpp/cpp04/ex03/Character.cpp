@@ -11,7 +11,8 @@ Character::Character(std::string n) {
 
 Character::~Character() {
 	for (int i = 0; i < 4; i++) {
-		delete parr[i];
+		if (parr[i] != NULL)
+			delete parr[i];
 	}
 }
 
@@ -20,8 +21,11 @@ std::string const & Character::getName() const {
 }
 
 void Character::equip(AMateria* m) {
-	if (index == 4)
+	if (index == 4) {
+		if (m != NULL)
+			delete m;
 		return ;
+	}
 	flag[index] = true;
 	parr[index++] = m;
 

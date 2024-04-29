@@ -7,10 +7,10 @@
 class Dog : public Animal {
 private:
 	Brain* bptr;
-	Dog(const Dog&);
-	Dog& operator=(const Dog&);
 public:
 	Dog(std::string n = "Dog");
+	Dog(const Dog&);
+	Dog& operator=(const Dog&);
 	virtual ~Dog();
 	virtual void makeSound() const;
 };

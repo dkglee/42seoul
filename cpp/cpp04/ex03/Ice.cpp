@@ -2,6 +2,15 @@
 
 Ice::Ice(std::string n) : AMateria(n) {}
 
+Ice::Ice(const Ice& o) : AMateria(o) {}
+
+Ice& Ice::operator=(const Ice& r) {
+	if (this == &r)
+		return *this;
+	AMateria::operator=(r);
+	return *this;
+}
+
 Ice::~Ice() {}
 
 void Ice::use(ICharacter& target) {

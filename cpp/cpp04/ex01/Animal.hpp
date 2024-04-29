@@ -5,12 +5,12 @@
 #include <string>
 
 class Animal {
-private:
+protected:
 	std::string type;
-	Animal(const Animal&);
-	Animal& operator=(const Animal&);
 public:
 	Animal(std::string n = "Animal");
+	Animal(const Animal&);
+	Animal& operator=(const Animal&);
 	virtual ~Animal();
 	virtual void makeSound() const;
 	std::string getType() const;
