@@ -14,14 +14,16 @@ Dog& Dog::operator=(const Dog& r) {
 	if (this == &r)
 		return *this;
 	Animal::operator=(r);
-	delete bptr;
+	if (bptr != NULL)
+		delete bptr;
 	bptr = new Brain(*r.bptr);
 	std::cout << "Dog Assignation Operator called" << std::endl;
 	return *this;
 }
 
 Dog::~Dog() {
-	delete bptr;
+	if (bptr != NULL)
+		delete bptr;
 	std::cout << "Dog destructor called" << std::endl;
 }
 

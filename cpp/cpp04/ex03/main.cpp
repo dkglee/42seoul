@@ -21,6 +21,10 @@ int main(void)
 
 	ICharacter* bob = new Character("bob");
 
+	Character tm(*dynamic_cast<Character*>(me));
+
+	tm.use(0, *bob);
+
 	me->use(0, *bob);
 	me->use(1, *bob);
 

@@ -5,7 +5,7 @@
 #include <string>
 
 class Animal {
-private:
+protected:
 	std::string type;
 public:
 	Animal(std::string n = "Animal");

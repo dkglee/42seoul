@@ -14,14 +14,16 @@ Cat& Cat::operator=(const Cat& r) {
 	if (this == &r)
 		return *this;
 	Animal::operator=(r);
-	delete bptr;
+	if (bptr != NULL)
+		delete bptr;
 	bptr = new Brain(*r.bptr);
 	std::cout << "Cat Assignation Operator called" << std::endl;
 	return *this;
 }
 
 Cat::~Cat() {
-	delete bptr;
+	if (bptr != NULL)
+		delete bptr;
 	std::cout << "Cat destructor called" << std::endl;
 }
 
