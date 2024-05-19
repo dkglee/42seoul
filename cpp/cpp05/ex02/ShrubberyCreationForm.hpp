@@ -6,9 +6,13 @@
 
 class ShrubberyCreationForm : public AForm {
 public:
-	ShrubberyCreationForm(std::string n);
+	ShrubberyCreationForm(std::string n = "Default");
+	ShrubberyCreationForm(const ShrubberyCreationForm&);
 	virtual ~ShrubberyCreationForm();
 	virtual void execute(Bureaucrat const & executor) const;
+private:
+	std::string target;
+	ShrubberyCreationForm& operator=(const ShrubberyCreationForm&);
 };
 
 #endif

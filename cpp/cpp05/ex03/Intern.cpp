@@ -1,30 +1,31 @@
 #include "Intern.hpp"
+#include <iostream>
 
-unsigned int Intern::hash(std::string type) {
-	unsigned int ret = 0;
-	for (int i = 0; i < type.size(); i++) {
-		ret += static_cast<unsigned int>(type[i]);
-		ret %= 15555;
-	}
-	return ret;
+Intern::Intern() {}
+
+Intern::Intern(const Intern& other) { *this = other; }
+
+Intern& Intern::operator=(const Intern& other) {
+    (void)other;
+    return *this;
 }
 
-AForm* Intern::makeForm(std::string type, std::string target) {
-	unsigned int num = hash(type);
-	AForm* ret;
-	switch (num) {
-		case 1700:
-			ret = new RobotomyRequestForm(target);
-			break;
-		case 1867:
-			ret = new ShrubberyCreationForm(target);
-			break;
-		case 1960:
-			ret = new PresidentialPardonForm(target);
-			break;
-		default:
-			std::cout << "there is no Form" << std::endl;
-			break;
-	}
-	return ret;
+Intern::~Intern() {}
+
+AForm* Intern::makeForm(const std::string& formName, const std::string& target) {
+    std::string formNames[] = {"shrubbery creation", "robotomy request", "presidential pardon"};
+    AForm* forms[] = {new ShrubberyCreationForm(target), new RobotomyRequestForm(target), new PresidentialPardonForm(target)};
+
+    for (int i = 0; i < 3; i++) {
+        if (formName == formNames[i]) {
+            std::cout << "Intern creates " << formName << std::endl;
+            return forms[i];
+        }
+        delete forms[i]; // 메모리 누수 방지
+    }
+    throw UnknownFormException();
+}
+
+const char* Intern::UnknownFormException::what() const throw() {
+    return "Unknown form requested";
 }

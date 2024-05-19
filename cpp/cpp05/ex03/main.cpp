@@ -1,23 +1,44 @@
-#include "AForm.hpp"
-#include "Intern.hpp"
+#include <iostream>
 #include "Bureaucrat.hpp"
-#include "PresidentialPardonForm.hpp"
-#include "RobotomyRequestForm.hpp"
+#include "Intern.hpp"
 #include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 
-int main(void)
-{
-	try {
-		Intern random;
-		AForm* rrf;
+int main() {
+    try {
+        Bureaucrat bob("Bob", 1);
+        Intern someRandomIntern;
+        AForm* form;
 
-		rrf = random.makeForm("robotomy request", "Bender");
-		Bureaucrat a("deulee", 1);
-		rrf->beSigned(a);
-		rrf->execute(a);
-		delete rrf;
-	}
-	catch (std::exception& e) {
-		std::cout << e.what() << std::endl;
-	}
+        form = someRandomIntern.makeForm("robotomy request", "Bender");
+        if (form) {
+            bob.signForm(*form);
+            bob.executeForm(*form);
+            delete form;
+        }
+
+        form = someRandomIntern.makeForm("shrubbery creation", "home");
+        if (form) {
+            bob.signForm(*form);
+            bob.executeForm(*form);
+            delete form;
+        }
+
+        form = someRandomIntern.makeForm("presidential pardon", "Alice");
+        if (form) {
+            bob.signForm(*form);
+            bob.executeForm(*form);
+            delete form;
+        }
+
+        form = someRandomIntern.makeForm("unknown form", "Target"); // 예외 발생
+        if (form) {
+            delete form;
+        }
+
+    } catch (std::exception& e) {
+        std::cerr << e.what() << std::endl;
+    }
+    return 0;
 }

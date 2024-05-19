@@ -5,29 +5,29 @@
 #include <string>
 #include <exception>
 
-
 class Bureaucrat {
-	friend std::ostream& operator<<(std::ostream&, Bureaucrat&);
 private:
 	const std::string name;
 	int grade;
-	Bureaucrat(const Bureaucrat&);
 	Bureaucrat& operator=(const Bureaucrat&);
 public:
 	class GradeTooHighException : public std::exception {
 	public:
-		virtual const char * what() const noexcept;
+		virtual const char * what() const throw();
 	};
 	class GradeTooLowException : public std::exception {
 	public:
-		virtual const char * what() const noexcept;
+		virtual const char * what() const throw();
 	};
-	Bureaucrat(std::string n, int g);
+	Bureaucrat(std::string n = "Default", int g = 150);
+	Bureaucrat(const Bureaucrat&);
 	~Bureaucrat();
 	int getGrade() const throw();
 	std::string getName() const throw();
-	void increaseGrade(int);
-	void decreaseGrade(int);
+	void increment();
+	void decrement();
 };
+
+std::ostream& operator<<(std::ostream&, Bureaucrat&);
 
 #endif

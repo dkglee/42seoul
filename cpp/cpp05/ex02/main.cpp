@@ -1,25 +1,26 @@
-#include "AForm.hpp"
+#include <iostream>
 #include "Bureaucrat.hpp"
-#include "PresidentialPardonForm.hpp"
-#include "RobotomyRequestForm.hpp"
 #include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 
-int main(void)
-{
-	try {
-		ShrubberyCreationForm sf("grara");
-		PresidentialPardonForm pf("trara");
-		RobotomyRequestForm af("rroobbo");
-		Bureaucrat a("deulee", 1);
+int main() {
+    try {
+        Bureaucrat bob("Bob", 7);
+        ShrubberyCreationForm shrubbery("home");
+        RobotomyRequestForm robotomy("Bender");
+        PresidentialPardonForm pardon("Alice");
 
-		sf.beSigned(a);
-		pf.beSigned(a);
-		af.beSigned(a);
-		sf.execute(a);
-		pf.execute(a);
-		af.execute(a);
-	}
-	catch (std::exception& e) {
+        bob.signForm(shrubbery);
+        bob.signForm(robotomy);
+        bob.signForm(pardon);
 
-	}
+        bob.executeForm(shrubbery);
+        bob.executeForm(robotomy);
+        bob.executeForm(pardon);
+
+    } catch (std::exception& e) {
+        std::cerr << e.what() << std::endl;
+    }
+    return 0;
 }

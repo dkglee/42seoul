@@ -5,8 +5,8 @@ int main(void)
 {
 	try {
 		Bureaucrat b("hello", 5);
-		Form c("Test A", 3);
-		c.beSigned(b);
+		Form c("Test A", 4, 10);
+		b.signForm(c);
 	}
 	catch (std::exception& e) {
 		std::cerr << e.what() << std::endl;

@@ -9,8 +9,10 @@ AForm::AForm(std::string n, bool flag, int gS, int gE) : name(n), signFlag(flag)
 
 AForm::~AForm() {}
 
+AForm::AForm(const AForm& f) : name(f.getName()), signFlag(f.getSigned()), gradeSigned(f.getGradeSigned()), gradeExecute(f.getGradeExecute()) {}
+
 std::ostream& operator<<(std::ostream& c, AForm& f) {
-	std::cout << f.getName() << " should be over grade of " << f.getGradeSigned() << "to be signed, and it's now " << f.signFlag;
+	std::cout << f.getName() << " should be over grade of " << f.getGradeSigned() << "to be signed, and it's now " << f.getSigned() << std::endl;
 	return c;
 }
 
@@ -22,30 +24,26 @@ bool AForm::getSigned() const {
 	return signFlag;
 }
 
-const int AForm::getGradeSigned() const {
+int AForm::getGradeSigned() const {
 	return gradeSigned;
 }
 
-const int AForm::getGradeExecute() const {
+int AForm::getGradeExecute() const {
 	return gradeExecute;
 }
 
 void AForm::beSigned(const Bureaucrat& b) {
-	if (b.getGrade() < this->getGradeSigned()) {
-		signFlag = true;
-		b.signForm(this->getName(), signFlag);
-	} else {
-		b.signForm(this->getName(), signFlag);
+	if (b.getGrade() > this->getGradeSigned())
 		throw AForm::GradeTooLowException();
-	}
+	signFlag = true;
 }
 
-const char* AForm::GradeTooHighException::what() const noexcept {
+const char* AForm::GradeTooHighException::what() const throw() {
 	return "grade is too high";
 
 }
 
-const char* AForm::GradeTooLowException::what() const noexcept {
+const char* AForm::GradeTooLowException::what() const throw() {
 	return "grade is too low";
 }
 
