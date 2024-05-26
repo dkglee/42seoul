@@ -32,7 +32,7 @@ int main() {
             delete form;
         }
 
-        form = someRandomIntern.makeForm("unknown form", "Target"); // 예외 발생
+        form = someRandomIntern.makeForm("unknown form", "Target");
         if (form) {
             delete form;
         }
