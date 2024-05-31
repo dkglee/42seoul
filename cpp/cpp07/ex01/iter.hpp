@@ -8,8 +8,8 @@ void printElement(const T& a) {
 	std::cout << a << ' ';
 }
 
-template <typename T>
-void iter(T* ptr, int size, void f(const T&)) {
+template <typename T, typename Func>
+void iter(T* ptr, int size, Func f) {
 	for (int i = 0; i < size; i++)
 		f(*(ptr + i));
 }

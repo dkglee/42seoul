@@ -14,15 +14,15 @@ public:
 	Array(unsigned int n) : s_(n) {
 		arr_ = new T[n];
 	}
-	Array(const Array& o) : s_(o.s) {
+	Array(const Array& o) : s_(o.s_) {
 		arr_ = new T[s_];
-		for (int i = 0; i < s_; i++)
+		for (unsigned int i = 0; i < s_; i++)
 			arr_[i] = o.arr_[i];
 	}
 	Array& operator=(const Array& r) {
 		s_ = r.s_;
 		arr_ = new T[s_];
-		for (int i = 0; i < s_; i++)
+		for (unsigned int i = 0; i < s_; i++)
 			arr_[i] = r.arr_[i];
 	}
 	T& operator[](int index) {
@@ -31,7 +31,7 @@ public:
 		return arr_[index];
 	}
 	const T& operator[](int index) const {
-		return const_cast<Array *>(this)[index];
+		return const_cast<Array<T>&>(*this)[index];
 	}
 	unsigned int size() {
 		return s_;

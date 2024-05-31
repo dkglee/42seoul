@@ -9,6 +9,12 @@ int main(void)
 	
 	for (int i = 0; i < 5; i++)
 		std::cout << iarr[i] << ' ';
+	
+	std::cout << std::endl;
+	const Array<int> carr(iarr);
+	for (int i = 0; i < 5; i++)
+		std::cout << carr[i] << ' ';
+	
 	std::cout << std::endl;
 	return 0;
 }
