@@ -21,9 +21,12 @@ public:
 	}
 	Array& operator=(const Array& r) {
 		s_ = r.s_;
+		if (arr_)
+			delete[] arr_;
 		arr_ = new T[s_];
 		for (unsigned int i = 0; i < s_; i++)
 			arr_[i] = r.arr_[i];
+		return *this;
 	}
 	T& operator[](int index) {
 		if (index < 0 || index > (static_cast<int>(s_) - 1))
@@ -33,7 +36,7 @@ public:
 	const T& operator[](int index) const {
 		return const_cast<Array<T>&>(*this)[index];
 	}
-	unsigned int size() {
+	unsigned int size() const {
 		return s_;
 	}
 	~Array() {
