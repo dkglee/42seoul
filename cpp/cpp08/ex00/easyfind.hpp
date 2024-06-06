@@ -7,7 +7,10 @@
 
 template <typename T>
 std::vector<int>::iterator easyfind(T& a, int b) {
-	return std::find(a.begin(), a.end(), b);
+	std::vector<int>::iterator it = std::find(a.begin(), a.end(), b);
+	if (it == a.end())
+		throw std::exception();
+	return it;
 }
 
 #endif

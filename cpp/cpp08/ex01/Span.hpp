@@ -4,27 +4,30 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <exception>
 
 class Span {
 private:
-	int index;
-	std::vector<int> varr;
+	unsigned int size_;
+	std::vector<int> varr_;
 public:
-	class Exception {
+	class Exception : public std::exception {
 	private:
 		std::string str;
 	public:
 		Exception(std::string);
-		const char* what() const;
+		virtual ~Exception() throw();
+		virtual const char* what() const throw();
 	};
+	Span();
 	Span(unsigned int n);
-	void addNumber(unsigned int);
-	void addNumber(unsigned int, std::vector<int>::iterator, std::vector<int>::iterator);
-	int shortestSpan();
-	int longestSpan();
-	std::vector<int>::iterator begin();
-	std::vector<int>::iterator end();
+	Span(const Span&);
+	Span& operator=(const Span&);
 	~Span();
+	void addNumber(int);
+	void addNumber(std::vector<int>::iterator, std::vector<int>::iterator);
+	long long shortestSpan();
+	long long longestSpan();
 };
 
 #endif

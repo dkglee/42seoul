@@ -1,53 +1,61 @@
 #include "Span.hpp"
+#include <limits>
 
-Span::Span(unsigned int n) : index(0) {
-	varr.resize(n);
+Span::Span() : size_(0) {
+}
+
+Span::Span(unsigned int n) : size_(n) {
+}
+
+Span::Span(const Span& n)
+	: size_(n.size_), varr_(n.varr_.begin(), n.varr_.end())
+{
+}
+
+Span& Span::operator=(const Span& n) {
+	size_ = n.size_;
+	varr_ = n.varr_;
+	return *this;
 }
 
 Span::~Span() {}
 
 Span::Exception::Exception(std::string n) : str(n) {}
 
-const char* Span::Exception::what() const {
+const char* Span::Exception::what() const throw() {
 	return str.c_str();
 }
 
-void Span::addNumber(unsigned int n) {
-	if (index >= varr.size())
+void Span::addNumber(int n) {
+	if (varr_.size() >= size_)
 		throw Exception("over bound");
-	varr[index++] = n;
+	varr_.push_back(n);
 }
 
-int Span::shortestSpan() {
-	if (varr.size() <= 1)
+long long Span::shortestSpan() {
+	if (varr_.size() <= 1)
 		throw Exception("not enough elements");
-	std::sort(varr.begin(), varr.end());
-	int ret = 214748368;
-	int i = 0;
-	int j = 1;
-	while (j < varr.size()) {
-		ret = std::min(ret, varr[j++] - varr[i++]);
-	}
+	std::sort(varr_.begin(), varr_.end());
+	long long ret = std::numeric_limits<long long>::max();
+	std::vector<int>::iterator it = varr_.begin() + 1;
+	for (; it != varr_.end(); it++)
+		ret = std::min(ret, static_cast<long long>(*it) - static_cast<long long>(*(it - 1)));
 	return ret;
 }
 
-void Span::addNumber(unsigned int n, std::vector<int>::iterator first, std::vector<int>::iterator last) {
-	for (; first < last; first++) {
-		*first = n;
-	}
+void Span::addNumber(std::vector<int>::iterator first, std::vector<int>::iterator last) {
+	unsigned int n = std::distance(first, last);
+	if (varr_.size() + n > size_)
+		throw Exception("over bound");
+	for (; first != last; first++)
+		varr_.push_back(*first);
 }
 
-int Span::longestSpan() {
-	if (varr.size() <= 1)
+long long Span::longestSpan() {
+	if (varr_.size() <= 1)
 		throw Exception("not enough elements");
-	std::sort(varr.begin(), varr.end());
-	return varr[varr.size() - 1] - varr[0];
+	std::sort(varr_.begin(), varr_.end());
+	return static_cast<long long>(*(varr_.end() - 1) - *(varr_.begin()));
 }
 
-std::vector<int>::iterator Span::begin() {
-	return varr.begin();
-}
-
-std::vector<int>::iterator Span::end() {
-	return varr.end();
-}
+Span::Exception::~Exception() throw() {}
