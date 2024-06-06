@@ -14,9 +14,34 @@ int main(void) {
 	std::cout << mstack.size() << std::endl;
 	MutantStack<int>::iterator it = mstack.begin();
 	MutantStack<int>::iterator ite = mstack.end();
+	std::cout << "---------mstack----------" << std::endl;
 
 	++it;
 	--it;
+	while (it != ite)
+	{
+		std::cout << *it << std::endl;
+		++it;
+	}
+
+	MutantStack<int> mstack2(mstack);
+	MutantStack<int> mstack3;
+	mstack3 = mstack;
+
+	std::cout << "---------mstack2----------" << std::endl;
+
+	it = mstack2.begin();
+	ite = mstack2.end();
+	while (it != ite)
+	{
+		std::cout << *it << std::endl;
+		++it;
+	}
+
+	std::cout << "---------mstack3----------" << std::endl;
+
+	it = mstack3.begin();
+	ite = mstack3.end();
 	while (it != ite)
 	{
 		std::cout << *it << std::endl;
