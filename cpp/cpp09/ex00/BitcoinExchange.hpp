@@ -1,61 +1,19 @@
-#ifndef BITCOINEXCHANGE_HPP
-# define BITCOINEXCHANGE_HPP
-
 #include <iostream>
-#include <map>
-#include <algorithm>
 #include <string>
-#include <fstream>
-#include <cstring>
-// #include <exception>
+#include <map>
 
-class Exception {
+class BitcoinExchange {
 public:
-	virtual ~Exception();
-	virtual const char* what() const = 0;
-};
-
-class BadInputException : public Exception {
+	BitcoinExchange();
+	BitcoinExchange(const BitcoinExchange& other);
+	BitcoinExchange& operator=(const BitcoinExchange& other);
+	~BitcoinExchange();
+	void loadPriceData();
+	void processTransaction(const std::string& filename);
 private:
-	std::string err;
-public:
-	BadInputException(std::string _e);
-	virtual ~BadInputException();
-	virtual const char* what() const;
+	double getClosetPrice(const std::string& date);
+	void ValidateDate(const std::string& date);
+	void ValidateValue(double value);
+
+	std::map<std::string, double> priceData_;
 };
-
-class NegativeIntException : public Exception {
-public:
-	virtual const char* what() const;
-	virtual ~NegativeIntException();
-};
-
-class OverIntException : public Exception {
-public:
-	virtual const char* what() const;
-	virtual ~OverIntException();
-};
-
-class ExchangeData {
-private:
-	std::map<std::string, float> mapping;
-	ExchangeData(const ExchangeData&);
-	ExchangeData& operator=(const ExchangeData&);
-public:
-	ExchangeData();
-	class FailedOpenFileException : public Exception {
-	public:
-		virtual const char* what() const;
-		virtual ~FailedOpenFileException();
-	};
-	void addValue(std::string line);
-	void parseData();
-	float findExchangeRate(std::string date);
-	std::map<std::string, float>::iterator movingIter(int center);
-	~ExchangeData();
-};
-
-std::string getDate(std::string line);
-float getNum(std::string line);
-
-#endif

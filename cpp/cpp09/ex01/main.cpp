@@ -19,7 +19,7 @@ int rpn(std::string exp) {
 			else if (exp[i] >= '0' && exp[i] <= '9')
 				temp = exp[i] - '0';
 			else
-				continue;
+				throw "Error";
 			st.push(temp);
 		}
 	}
