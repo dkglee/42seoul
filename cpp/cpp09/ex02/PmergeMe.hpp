@@ -11,6 +11,10 @@ public:
 	static void MergeInsertSortVector(std::vector<int>& container);
 	static void MergeInsertSortList(std::list<int>& container);
 private:
+	PmergeMe();
+	PmergeMe(const PmergeMe&);
+	PmergeMe& operator=(const PmergeMe&);
+	~PmergeMe();
 	static void MergeInsertVector(std::vector<std::pair<int, int> >& container, std::vector<std::pair<int, int> >& left, std::vector<std::pair<int, int> >& right);
 	static void MergeInsertList(std::list<std::pair<int, int> >& container, std::list<std::pair<int, int> >& left, std::list<std::pair<int, int> >& right);
 	static void MergeSortVector(std::vector<std::pair<int, int> >& container);

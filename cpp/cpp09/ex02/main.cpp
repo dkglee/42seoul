@@ -14,7 +14,6 @@ void print_element(int i) {
 int main(int argc, char* argv[])
 {
 	try {
-		PmergeMe merge_me;
 		std::vector<int> numbers_vector;
 		std::list<int> numbers_list;
 
@@ -31,11 +30,11 @@ int main(int argc, char* argv[])
 		std::for_each(numbers_vector.begin(), numbers_vector.end(), print_element);
 
 		clock_t start_vector = clock();
-		merge_me.MergeInsertSortVector(numbers_vector);
+		PmergeMe::MergeInsertSortVector(numbers_vector);
 		clock_t end_vector = clock();
 
 		clock_t start_list = clock();	
-		merge_me.MergeInsertSortList(numbers_list);
+		PmergeMe::MergeInsertSortList(numbers_list);
 		clock_t end_list = clock();
 
 		std::cout << "\nAfter: ";
