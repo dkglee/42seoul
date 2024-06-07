@@ -7,6 +7,8 @@
 
 class RPN {
 public:
+	static void rpn(std::stack<int>&, std::string);
+private:
 	static int add(std::stack<int>&);
 	static int sub(std::stack<int>&);
 	static int pro(std::stack<int>&);
