@@ -161,7 +161,8 @@ void PmergeMe::MergeSortList(std::list<std::pair<int, int> >& container) {
 			std::swap(container.front().first, container.front().second);
 		return;
 	}
-	std::list<std::pair<int, int> >::iterator middle = std::next(container.begin(), container.size() / 2);
+	std::list<std::pair<int, int> >::iterator middle = container.begin();
+    std::advance(middle, container.size() / 2);
 	std::list<std::pair<int, int> > left(container.begin(), middle);
 	std::list<std::pair<int, int> > right(middle, container.end());
 	MergeSortList(left);
@@ -185,8 +186,11 @@ std::list<int> PmergeMe::GenerateJacobsthalSequenceList(size_t size) {
 
 	while (ret_index < size) {
 		// jacobsthal_sequence.push_back(jacobsthal_sequence[jac_index - 1] + 2 * jacobsthal_sequence[jac_index - 2]);
-		std::list<int>::iterator jacobsthal_it1 = std::next(jacobsthal_sequence.begin(), jac_index - 1);
-        std::list<int>::iterator jacobsthal_it2 = std::next(jacobsthal_sequence.begin(), jac_index - 2);
+		std::list<int>::iterator jacobsthal_it1 = jacobsthal_sequence.begin();
+        std::advance(jacobsthal_it1, jac_index - 1);
+
+        std::list<int>::iterator jacobsthal_it2 = jacobsthal_sequence.begin();
+        std::advance(jacobsthal_it2, jac_index - 2);
 
 		int new_jacobsthal = *jacobsthal_it1 + 2 * (*jacobsthal_it2);
         jacobsthal_sequence.push_back(new_jacobsthal);
@@ -199,7 +203,8 @@ std::list<int> PmergeMe::GenerateJacobsthalSequenceList(size_t size) {
 				temp--;
 				continue;
 			}
-			ret_it = std::next(return_list.begin(), ret_index);
+			ret_it = return_list.begin();
+			std::advance(ret_it, ret_index);
             *ret_it = (temp - 1);
 			ret_index++;
 			temp--;
@@ -211,13 +216,14 @@ std::list<int> PmergeMe::GenerateJacobsthalSequenceList(size_t size) {
 }
 
 void PmergeMe::InsertUsingBinarySearchList(std::list<int>& container, std::list<int>::iterator end, int value) {
-	auto left = container.begin();
-    auto right = end;
+	std::list<int>::iterator left = container.begin();
+    std::list<int>::iterator right = end;
     while (left != right) {
-        auto mid = left;
+        std::list<int>::iterator mid = left;
         std::advance(mid, std::distance(left, right) / 2);
         if (*mid < value) {
-            left = std::next(mid);
+			++mid;
+            left = mid;
         } else {
             right = mid;
         }
@@ -230,12 +236,6 @@ void PmergeMe::MergeInsertSortList(std::list<int>& container) {
 		return;
 	}
 	
-	// std::cout << "\npairs[list]: ";
-	// for (auto it = container.begin(); it != container.end(); ++it) {
-	// 	std::cout << *it << " ";
-	// }
-	// std::cout << std::endl;
-
 	std::list<std::pair<int, int> > pairs;
 	std::list<int> main_chain;
 	std::list<int> pending_chain;
@@ -243,54 +243,32 @@ void PmergeMe::MergeInsertSortList(std::list<int>& container) {
 	
     std::list<int>::iterator it = container.begin();
     while (it != container.end()) {
-        std::list<int>::iterator next_it = std::next(it);
+        std::list<int>::iterator next_it = it;
+		++next_it;
 		if (*it < 0 || *next_it < 0) {
 			throw std::invalid_argument("Error");
 		}
         if (next_it != container.end()) {
             pairs.push_back(std::make_pair(*it, *next_it));
-            it = std::next(next_it);
+            it = ++next_it;
         } else {
 			++it;
 		}
     }
 	MergeSortList(pairs);
-	// std::cout << "\npairs[list]: ";
-	// for (auto it = pairs.begin(); it != pairs.end(); ++it) {
-	// 	std::cout << it->first << " " << it->second << " ";
-	// }
-	// std::cout << std::endl;
 
-
-	std::list<std::pair<int, int>>::iterator pair_it;
+	std::list<std::pair<int, int> >::iterator pair_it;
     for (pair_it = pairs.begin(); pair_it != pairs.end(); ++pair_it) {
         main_chain.push_back(pair_it->first);
         pending_chain.push_back(pair_it->second);
     }
 
-	// std::cout << "main_chain: ";
-	// for (auto it : main_chain) {
-	// 	std::cout << it << " ";
-	// }
-	// std::cout << std::endl;
-
 	if (container.size() % 2 == 1) {
 		pending_chain.push_back(container.back());
 	}
 
-	// std::cout << "pending_chain: ";
-	// for (auto it : pending_chain) {
-	// 	std::cout << it << " ";
-	// }
-	// std::cout << std::endl;
 
 	std::list<int> jacobsthal_sequence = GenerateJacobsthalSequenceList(pending_chain.size());
-
-	// std::cout << "jacobsthal_sequence: ";
-	// for (auto it : jacobsthal_sequence) {
-	// 	std::cout << it << " ";
-	// }
-	// std::cout << std::endl;
 
 	std::list<int>::iterator jacobsthal_it = jacobsthal_sequence.begin();
 	std::list<int>::iterator search_range;
@@ -299,15 +277,14 @@ void PmergeMe::MergeInsertSortList(std::list<int>& container) {
 			search_range = main_chain.end();
 		} 
 		else {
-			search_range = std::find(main_chain.begin(), main_chain.end(), std::next(pairs.begin(), *jacobsthal_it)->first);
+			std::list<std::pair<int, int> >::iterator pair_it = pairs.begin();
+            std::advance(pair_it, *jacobsthal_it);
+			search_range = std::find(main_chain.begin(), main_chain.end(), pair_it->first);
 		}
-		InsertUsingBinarySearchList(main_chain, search_range, *std::next(pending_chain.begin(), *jacobsthal_it));
+		std::list<int>::iterator pending_it = pending_chain.begin();
+        std::advance(pending_it, *jacobsthal_it);
+		InsertUsingBinarySearchList(main_chain, search_range, *pending_it);
 	}
-
-	// for (auto it = main_chain.begin(); it != main_chain.end(); ++it) {
-	// 	std::cout << *it << " ";
-	// }
-	// std::cout << std::endl;
 
 	std::copy(main_chain.begin(), main_chain.end(), container.begin());
 }
